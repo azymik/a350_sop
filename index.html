@@ -1,0 +1,1251 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>A350 SOP Practice</title>
+        <style>
+            :root {
+                --primary-color: #00264d; /* Airbus Blue-ish */
+                --accent-color: #0099cc;
+                --bg-color: #f4f4f9;
+                --text-color: #333;
+                --card-bg: #fff;
+                --pf-color: #e74c3c;
+                --pm-color: #27ae60;
+                --cm1-color: #8e44ad;
+                --cm2-color: #d35400;
+            }
+
+            body {
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: var(--bg-color);
+                color: var(--text-color);
+            }
+
+            /* Header & Navigation */
+            header {
+                background-color: var(--primary-color);
+                color: white;
+                padding: 1rem 2rem;
+                position: sticky;
+                top: 0;
+                z-index: 1000;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            }
+
+            h1 {
+                margin: 0;
+                font-size: 1.5rem;
+            }
+
+            .role-selector {
+                display: flex;
+                gap: 10px;
+                margin-top: 10px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .role-btn {
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                color: white;
+                padding: 8px 16px;
+                cursor: pointer;
+                border-radius: 4px;
+                font-weight: bold;
+                transition: all 0.3s ease;
+            }
+
+            .role-btn:hover {
+                background: rgba(255, 255, 255, 0.2);
+            }
+
+            .role-btn.active {
+                background: white;
+                color: var(--primary-color);
+                border-color: white;
+                transform: scale(1.05);
+            }
+
+            /* Content Area */
+            main {
+                max-width: 800px;
+                margin: 2rem auto;
+                padding: 0 1rem;
+            }
+
+            .section {
+                background: var(--card-bg);
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+                margin-bottom: 2rem;
+                overflow: hidden;
+            }
+
+            .section-header {
+                background-color: #e9ecef;
+                padding: 1rem;
+                font-size: 1.2rem;
+                font-weight: bold;
+                border-left: 5px solid var(--accent-color);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .item-group {
+                border-bottom: 1px solid #eee;
+            }
+
+            .item-group:last-child {
+                border-bottom: none;
+            }
+
+            .item {
+                padding: 1rem;
+                display: flex;
+                flex-direction: column;
+                transition: background 0.2s;
+            }
+
+            .item:hover {
+                background-color: #fcfcfc;
+            }
+
+            .item-role-badge {
+                font-size: 0.7rem;
+                text-transform: uppercase;
+                padding: 2px 6px;
+                border-radius: 3px;
+                align-self: flex-start;
+                margin-bottom: 5px;
+                font-weight: bold;
+                color: white;
+            }
+
+            /* Role Badge Colors */
+            .role-PF {
+                background-color: var(--pf-color);
+            }
+            .role-PM {
+                background-color: var(--pm-color);
+            }
+            .role-CM1 {
+                background-color: var(--cm1-color);
+            }
+            .role-CM2 {
+                background-color: var(--cm2-color);
+            }
+            .role-BOTH,
+            .role-ALL,
+            .role-CM1-CM2 {
+                background-color: #7f8c8d;
+            }
+
+            .action-title {
+                font-weight: 700;
+                font-size: 1rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .action-detail {
+                font-size: 0.9rem;
+                color: #555;
+                line-height: 1.5;
+                white-space: pre-wrap; /* Keeps formatting */
+            }
+
+            .sub-action {
+                margin-left: 20px;
+                margin-top: 5px;
+                padding-left: 10px;
+                border-left: 2px solid #ddd;
+            }
+
+            /* Filtering Logic (Hidden by default) */
+            .hidden {
+                display: none !important;
+            }
+
+            .empty-section-message {
+                padding: 1rem;
+                color: #999;
+                font-style: italic;
+                text-align: center;
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <div style="text-align: center">
+                <h1>A350 SOP Practice</h1>
+                <p style="font-size: 0.9rem; margin: 5px 0 0; opacity: 0.8">
+                    Select your role to filter the checklist
+                </p>
+            </div>
+            <div class="role-selector" id="roleSelector">
+                <button
+                    class="role-btn active"
+                    onclick="toggleRole('ALL')"
+                    data-role="ALL"
+                >
+                    SHOW ALL
+                </button>
+                <button
+                    class="role-btn"
+                    onclick="toggleRole('CM1')"
+                    data-role="CM1"
+                >
+                    CM1 (LHS)
+                </button>
+                <button
+                    class="role-btn"
+                    onclick="toggleRole('CM2')"
+                    data-role="CM2"
+                >
+                    CM2 (RHS)
+                </button>
+                <button
+                    class="role-btn"
+                    onclick="toggleRole('PF')"
+                    data-role="PF"
+                >
+                    PF
+                </button>
+                <button
+                    class="role-btn"
+                    onclick="toggleRole('PM')"
+                    data-role="PM"
+                >
+                    PM
+                </button>
+            </div>
+        </header>
+
+        <main id="checklist-container"></main>
+
+        <script>
+            // Data Structure extracted from Markdown
+            const sopData = [
+                {
+                    title: "Safety Exterior Inspection",
+                    items: [
+                        {
+                            role: "CM2",
+                            action: "WHEEL CHOCKS - CHECK",
+                            detail: "If the wheel chocks are not in position, the flight crew must check that the parking brake is set with sufficient accumulator pressure.",
+                        },
+                        {
+                            role: "CM2",
+                            action: "L/G DOORS - CHECK POSITION",
+                            detail: "If any landing gear door is open, do not pressurize the hydraulic systems until clearance is obtained from ground personnel.",
+                        },
+                        {
+                            role: "CM2",
+                            action: "APU AREA - CHECK",
+                            detail: "Check that the APU exhaust is free of obstruction.",
+                        },
+                    ],
+                },
+                {
+                    title: "Cockpit Preflight Security Check",
+                    items: [
+                        {
+                            role: "CM2",
+                            action: "COCKPIT FLOOR - CHECK",
+                            detail: "",
+                        },
+                        {
+                            role: "CM2",
+                            action: "CREW SEATS BACKSIDE POCKETS - CHECK",
+                            detail: "",
+                        },
+                        {
+                            role: "CM2",
+                            action: "BRIEFCASE / QRH / PERSONAL STOWAGES - CHECK",
+                            detail: "",
+                        },
+                        {
+                            role: "CM2",
+                            action: "LAPTOP / BOTTLE STOWAGES - CHECK",
+                            detail: "",
+                        },
+                        {
+                            role: "CM2",
+                            action: "OXYGEN MASK AND BOOMSET STOWAGES - CHECK",
+                            detail: "",
+                        },
+                        {
+                            role: "CM2",
+                            action: "EMERGENCY EQUIPMENT STOWAGES - CHECK",
+                            detail: "",
+                        },
+                        {
+                            role: "CM2",
+                            action: "COAT STOWAGE - CHECK",
+                            detail: "",
+                        },
+                        {
+                            role: "CM2",
+                            action: "COCKPIT SUITCASE LOCKED/SEALED - CHECK",
+                            detail: "",
+                        },
+                        {
+                            role: "CM2",
+                            action: "LANDING GEAR LEVER COVER - CHECK",
+                            detail: "",
+                        },
+                        {
+                            role: "CM2",
+                            action: "OCCUPANT SEATS - CHECK",
+                            detail: "",
+                        },
+                        {
+                            role: "CM2",
+                            action: "CERTIFICATES/ONBOARD DOCUMENTS - CHECK",
+                            detail: "",
+                        },
+                    ],
+                },
+                {
+                    title: "Preliminary Cockpit Preparation",
+                    items: [
+                        {
+                            role: "BOTH",
+                            action: "AIRCRAFT SETUP",
+                            isHeader: true,
+                        },
+                        {
+                            role: "CM2",
+                            action: "ENG 1, 2 MASTER LEVERS - OFF",
+                            detail: "",
+                        },
+                        {
+                            role: "CM2",
+                            action: "ENG START selector - NORM",
+                            detail: "",
+                        },
+                        { role: "CM2", action: "L/G lever - DOWN", detail: "" },
+                        {
+                            role: "CM2",
+                            action: "Both WIPER selectors - OFF",
+                            detail: "",
+                        },
+
+                        {
+                            role: "BOTH",
+                            action: "BATTERIES CHECK/EXTERNAL POWER",
+                            isHeader: true,
+                        },
+                        {
+                            role: "CM2",
+                            action: "ALL BAT pb-sw (BAT 2, BAT EMER 2, BAT EMER 1, BAT 1) - OFF",
+                            detail: "Switch off the batteries in this specific order: BAT 2, BAT EMER 2, BAT EMER 1, BAT 1. This prevents the display of spurious dispatch messages.",
+                        },
+                        {
+                            role: "CM2",
+                            action: "ALL BAT - CHECK ABOVE 25 V",
+                            detail: "Check the battery voltage on the overhead panel.",
+                        },
+                        {
+                            role: "CM2",
+                            action: "ALL BAT pb-sw (BAT 1, BAT EMER 1, BAT EMER 2, BAT 2) - ON",
+                            detail: "The crew must ensure that the voltage of all batteries is above 25 V before takeoff.\nSwitch on the batteries in this specific order: BAT 1, BAT EMER 1, BAT EMER 2, BAT 2. This prevents the display of spurious dispatch messages.\nIf a battery voltage is at or below 25 V, perform a charging cycle of the batteries with the external power or the APU. A charging cycle lasts in average around 45 min. The flight crew can verify on the ELEC DC SD page, that the batteries charge with both indications:\n- The current is between 0 A and 4 A\n- A green arrow is displayed between the DC busbar and the battery indications.",
+                        },
+                        {
+                            role: "CM2",
+                            action: "When the AVAIL light is on:",
+                            detail: "",
+                        },
+                        {
+                            role: "CM2",
+                            action: "> EXT 1(2) pb - AUTO",
+                            detail: "In order to avoid electrical reconfigurations:\n- When only one electrical power is available, connect EXT PWR 2\n- When two electrical powers are available, connect EXT PWR 2 before EXT PWR 1.\nTo avoid the display of spurious dispatch messages, the GND SVCE sw 1 on the door 1L must be set to OFF before setting the EXT 1(2) pb to the AUTO position.",
+                        },
+                        { role: "BOTH", action: "ELM", isHeader: true },
+                        {
+                            role: "CM2",
+                            action: "ELM pb-sw - CHECK OFF",
+                            detail: "On the ELEC panel, ensure that the ELM pb-sw is set to OFF in order to avoid load shedding during ground operations.",
+                        },
+                        { role: "BOTH", action: "ADIRS", isHeader: true },
+                        {
+                            role: "CM2",
+                            action: "All IR MODE selectors - OFF then NAV",
+                            detail: "Perform a complete alignment, if one of the following applies:\n- This is the first flight of the day\n- There was a change in flight crew\n- The GPS is not available, and if the flight crew expects long segments in airspaces with poor radio NAVAIDS coverage\n- RNP AR operations are expected\nFor other flights, perform a fast alignment.\nFor more information on the IR alignment, Refer to IR alignment",
+                        },
+
+                        {
+                            role: "BOTH",
+                            action: "COCKPIT LIGHTS",
+                            isHeader: true,
+                        },
+                        {
+                            role: "CM1-CM2",
+                            action: "COCKPIT LIGHTS - AS RQRD",
+                            detail: "On the overhead panel, set the STBY COMPASS sw as required, and set to BRT or DIM the ANN LT sw as required.\nOn the glareshield, set the glareshield integral lights knob, as required.\nOn the pedestal, set the FLOOD LT knob, the DOME LT knob and INTEG LT knob, as required.\nOn the pedestal, set the DU MASTER BRT knob, as required.\nOn each Display Unit, adjust the brightness and contrast, as required.",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "EFB/FMS INITIALIZATION",
+                            isHeader: true,
+                        },
+                        {
+                            role: "CM1-CM2",
+                            action: "ALL EFBs - START",
+                            detail: "",
+                        },
+                        {
+                            role: "CM1",
+                            action: "On FMS ACTIVE/INT page: FLT NBR - INSERT/CHECK",
+                            detail: "Insert FLT NBR only if the company flight plan is not received via ACARS. For ATC needs, the crew should enter exactly the entire flight number, as shown on the ICAO flight plan, without inserting any space.",
+                        },
+                        {
+                            role: "CM1",
+                            action: "On FMS DATA/STATUS page: ACFT STATUS - CHECK",
+                            detail: "Check:\n- The engine and aircraft types\n- The active database validity period\n- The pilot stored elements: Check if any waypoint, NAVAID, route, and runway appear. Review and delete them, if appropriate.\n- The PERF and IDLE factors.: To modify the PERF and IDLE factors, Refer to DSC-22-FMS-20-20-20 MODIFY Button",
+                        },
+                        {
+                            role: "CM1",
+                            action: "On FMS ACTIVE/INT page: FROM/TO - INSERT/CHECK",
+                            detail: "Insert FROM/TO only if the company flight plan is not received via ACARS.",
+                        },
+                        {
+                            role: "CM1-CM2",
+                            action: "EFB Version and Database - CHECK",
+                            detail: "On the FLT OPS STS page, check the EFB version number and compare it with valid version number given in the CrewBulletin.",
+                        },
+                        {
+                            role: "CM1",
+                            action: "EFB/AVIONICS - SYNCHRONIZE",
+                            detail: "Synchronize the EFB with the avionics to retrieve initialization information.",
+                        },
+                        {
+                            role: "CM1-CM2",
+                            action: "EFB INITIALIZATION - CHECK",
+                            detail: "Check the EFB initialization:\n- ACFT TYPE and ACFT REG\n- FLT NBR and FROM/TO in agreement with the FMS ACTIVE/INIT page.\nIf the synchronization with the avionics is not available, the flight crew must manually enter in the EFB the above mentioned data.",
+                        },
+                        {
+                            role: "CM1",
+                            action: "AVNCS COMPANY COM - SELECT",
+                            detail: "Click on the PRE-FLIGHT",
+                        },
+                        {
+                            role: "CM1-CM2",
+                            action: "On the INIT DATA page - CHECK and INSERT",
+                            detail: "On the INIT DATA page:\n- Check the DEPT/DEST\n- Insert ETD as shown on the flight plan\n- Check and insert SCHEDULE DATE as shown on the flight plan",
+                        },
+                        {
+                            role: "CM1",
+                            action: "SEND button - CLICK",
+                            detail: "",
+                        },
+                        { role: "BOTH", action: "ANF", isHeader: true },
+                        {
+                            role: "CM1",
+                            action: "ANF DATABASE - CHECK",
+                            detail: "- Set the ND range selector to ZOOM to activate the ANF, then\n- Select the STATUS tab and check that the active database is valid.",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "AIRCRAFT ACCEPTANCE",
+                            isHeader: true,
+                        },
+                        {
+                            role: "CM1",
+                            action: "RCL ALL pb - PRESS 3 s",
+                            detail: "Press the RCL ALL pb for at least 3 s to recall all alerts that were cleared or canceled.",
+                        },
+                        {
+                            role: "CM1",
+                            action: "DISPCH pb - PRESS",
+                            detail: "Press the DISPCH pb to consult all active dispatch messages. The dispatch message NAV RNP AR CAPABILITY DOWNGRADED may be displayed if the F-PLN is not yet entered in the FMS. If the above dispatch message is still displayed after the entry of the F-PLN in the FMS, the flight crew must take it into account for the aircraft acceptance.",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "ELB/LOGBOOK AND MEL/CDL ITEMS - CHECK",
+                            detail: "- Check the deferred items list\n- Crosscheck with active dispatch messages.\n\nAll flight crewmembers:\n- Check and discuss the technical condition of the aircraft (deferred items list)\n- Check and discuss the MEL items (including the associated operational procedures, if any) and the CDL items. This includes the acceptability of the MEL and CDL items and the influence on the flight plan\n- Confirming the information of Notice to Crew\n- In FZFG conditions with OAT at + 1 °C (34 °F) or below, the flight crew must refer to the operations in FZFG (Refer to PRO-NOR-SUP-SUP-ADVWXR Engine Operation on Ground in FZFG).",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "AIRCRAFT CONFIGURATION SUMMARY - CHECK",
+                            detail: "For awareness of the current aircraft configuration, both flight crewmembers discuss together the optional installed aircraft systems and functions, and their influence on the ongoing flight.\nRefer to GEN Aircraft Configuration Summary.",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "OEB - CHECK",
+                            detail: "All flight crewmembers review and discuss together all OEBs and associated procedures applicable to the aircraft.\nAny flight crewmember who operates at the flight deck at any time during the on-going flight should be aware of the applicable OEB(s).",
+                        },
+                        {
+                            role: "CM1",
+                            action: "AIRCRAFT ACCEPTANCE - PERFORM",
+                            detail: "The aircraft acceptance can be performed later, but must be completed at the end of the Cockpit Preparation.",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "FIRE TEST/APU START",
+                            isHeader: true,
+                        },
+                        {
+                            role: "CM2",
+                            action: "RMP 1 and 2 - CHECK ON",
+                            detail: "",
+                        },
+                        {
+                            role: "CM2",
+                            action: "STBY NAV - CHECK OFF | STBY RAD NAV key - OFF",
+                            detail: "",
+                        },
+                        {
+                            role: "CM2",
+                            action: "COMMUNICATION FREQUENCIES - TUNE",
+                            detail: "",
+                        },
+                        {
+                            role: "CM1-CM2",
+                            action: "INT RECEPTION knob - RELEASE/ADJUST",
+                            detail: "Press and release the INT RECEPTION knob to the out position.\nTurn the INT RECEPTION knob to adjust the volume and to enable contact with the ground crew.",
+                        },
+                        {
+                            role: "CM2",
+                            action: "APU FIRE pb-sw - CHECK IN and GUARDED",
+                            detail: "",
+                        },
+                        {
+                            role: "CM2",
+                            action: "APU AGENT light - OFF",
+                            detail: "",
+                        },
+                        {
+                            role: "CM2",
+                            action: "ALL ENG FIRE pb-sw - CHECK IN and GUARDED",
+                            detail: "",
+                        },
+                        {
+                            role: "CM2",
+                            action: "ALL ENG AGENT 1 and 2 lights - OFF",
+                            detail: "",
+                        },
+                        {
+                            role: "CM2",
+                            action: "FIRE TEST pb - PRESS",
+                            detail: "The flight crew should maintain the TEST pb pressed during the time of the test.\nTEST RESULT\nCheck that the engines, APU and main landing gear bay fire detection and extinguishing systems are operative:\n- The continuous repetitive chime sounds\n- All ENG FIRE pb-sw and the APU FIRE pb-sw come on red\n- All SQUIB lights of the ENG and APU AGENT pb come on\n- All DISCH lights of the ENG and APU AGENT pb come on\n- The FIRE light of the MLG BAY light comes on red\n- The MASTER WARN lights flash\n- The ECAM displays the ENG 1 FIRE, ENG 2 FIRE, APU FIRE, MLG BAY FIRE alerts\n- All FIRE lights on the ENG MASTER panel come on.",
+                        },
+                        {
+                            role: "CM2",
+                            action: "APU MASTER SW pb-sw - ON",
+                            detail: "",
+                        },
+                        {
+                            role: "CM2",
+                            action: "APU START pb - ON",
+                            detail: "If the APU start failed, Refer to APU Abnormal Operations.",
+                        },
+                        {
+                            role: "CM2",
+                            action: "When the APU is AVAIL",
+                            detail: "",
+                        },
+                        {
+                            role: "CM2",
+                            action: "> APU BLEED pb-sw - ON",
+                            detail: "Do not use APU bleed if the ground crew confirms that an air start unit or air conditioning unit is connected to the aircraft.\nTo determine if an air start unit is connected, the flight crew should check on the BLEED SD page, if there is pressure in the bleed air system.",
+                        },
+                        {
+                            role: "CM2",
+                            action: "> XBLEED selector - AUTO",
+                            detail: "",
+                        },
+                        {
+                            role: "CM2",
+                            action: "> AIR FLOW selector - NORM",
+                            detail: "As long as the number of passenger is not entered in the FMS, airflow is automatically adjusted to the maximum number of passengers.\nAs soon as the number of passengers is entered, during FMS initialization, airflow is automatically adjusted to the actual number of passengers.",
+                        },
+                        {
+                            role: "CM2",
+                            action: "> COCKPIT selector - AS RQRD",
+                            detail: "",
+                        },
+                        {
+                            role: "CM2",
+                            action: "> CABIN selector - PURS SEL",
+                            detail: "",
+                        },
+                        {
+                            role: "CM2",
+                            action: "> EXT pb - AS RQRD",
+                            detail: "When the APU GEN is ON, the EXT PWR 1 does not supply the electrical network.",
+                        },
+                        {
+                            role: "CM2",
+                            action: "> If EXT PWR 1 was used before APU start:",
+                            detail: "",
+                        },
+                        {
+                            role: "CM2",
+                            action: ">> EXT 1 pb - PRESS",
+                            detail: "Note: the AVAIL light comes on.\nThe flight crew may keep EXT PWR 2 to reduce the APU load, particularly in hot weather conditions.",
+                        },
+                        {
+                            role: "CM2",
+                            action: "If APU start on BAT:",
+                            detail: "The following spurious dispatch messages may be displayed on the DISPATCH page:\n- ELEC RAT SHEDDING REDUNDANCY,\n- COND VENT LOCAL CTL REDUNDANCY.\nContact maintenance to clear the spurious dispatch messages, or apply MEL:\n- For ELEC RAT SHEDDING REDUNDANCY: Refer to MEL/ME-DM-ELEC ELEC RAT SHEDDING REDUNDANCY,\n- For COND VENT LOCAL CTL REDUNDANCY: Referto MEL/ME-DM-COND COND VENT LOCAL CTL REDUNDANCY.",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "PRELIMINARY PERFORMANCE DETERMINATION",
+                            isHeader: true,
+                        },
+                        {
+                            role: "CM1-CM2",
+                            action: "AIRFIELD DATA - OBTAIN",
+                            detail: "",
+                        },
+                        {
+                            role: "CM1-CM2",
+                            action: "If dispatch under MEL or CDL and in accordance with the logbook:",
+                            detail: "",
+                        },
+                        {
+                            role: "CM1-CM2",
+                            action: "> MEL/CDL ITEMS - CHECK",
+                            detail: "Check that the EFB takes into account the MEL and CDL items.",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "NAVIGATION CHARTS - PREPARE",
+                            detail: "Prepare the necessary charts and verify that both flight crewmembers refer to the same chart reference.",
+                        },
+                        {
+                            role: "CM1-CM2",
+                            action: "PRELIM T.O PERF DATA - COMPUTE",
+                            detail: "Both flight crewmembers discuss together and decide all of the following:\n- RWY to be used\n- RWY intersection\n- Flaps setting\n- Use of anti-ice\n- Use of packs\n- Takeoff thrust setting options (FLEX, TOGA, DERATE).\nBoth flight crewmembers independently compute the preliminary takeoff performance data.",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "PRELIM T.O PERF DATA - CROSSCHECK",
+                            detail: "Both flight crewmembers compare their EFB to ensure that the computations are the same.",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "BEFORE WALKAROUND (PF/PM)",
+                            isHeader: true,
+                        },
+                        {
+                            role: "PM",
+                            action: "ECAM ENG OIL QTY - CHECK",
+                            detail: "",
+                        },
+                        {
+                            role: "PM",
+                            action: "On the DOOR SD page:",
+                            detail: "",
+                        },
+                        {
+                            role: "PM",
+                            action: "> RAIN RPLNT LEVEL INDICATION - CHECK NORM",
+                            detail: "Rain repellent must not be used as a windshield washer, and never be applied on a dry windshield.",
+                        },
+                        {
+                            role: "PM",
+                            action: "> CAPT and F/O OXYGEN PRESSURE - CHECK",
+                            detail: "Check that the oxygen pressure is above the minimum necessary to fly the scheduled flight.\nRefer to LIM-OXY Minimum Flight Crew Oxygen Pressure",
+                        },
+                        {
+                            role: "PM",
+                            action: "On the HYD SD page: RESERVOIR FLUID LEVEL - CHECK WITHIN NORMAL RANGE",
+                            detail: "",
+                        },
+                        {
+                            role: "PM",
+                            action: "On the ENG SD page: ENG OIL QUANTITY - CHECK NORMAL",
+                            detail: "350-900\nIf the ENG oil quantity indication does not appear on the ENG SD page, press the ENG 1 and 2 FADEC GND PWR pb-sw on the overhead maintenance panel. After the check of the ENG oil quantity, press again the ENG 1 and 2 FADEC GND PWR pb-sw.\n\n350-1000\nIf the ENG oil quantity indication does not appear on the ENG SD page, press the ENG 1 and 2 FADEC GND PWR pb-sw on the overhead maintenance panel. After the check of the ENG oil quantity, press again the ENG 1 and 2 FADEC GND PWR pb-sw.\n\ncommon\nCheck that the oil quantity is above the minimum. Refer to Engines Oil Limitations.",
+                        },
+                        {
+                            role: "PM",
+                            action: "FLAPS - CHECK POSITION",
+                            detail: "Check that the slats/flaps position on the lower part of the PFD agrees with the FLAPS lever position.",
+                        },
+                        {
+                            role: "PM",
+                            action: "SPEED BRAKE lever - CHECK RETRACTED/DISARMED",
+                            detail: "If flight control surface positions do not agree with the control handle positions, check with the maintenance crew before applying hydraulic power.",
+                        },
+                        {
+                            role: "PM",
+                            action: "ACCU PRESS - CHECK",
+                            detail: "The GREEN and YELLOW ACCU pressure indications must be in the green band.",
+                        },
+                        {
+                            role: "PM",
+                            action: "If the GREEN pressure indication is not in the green band:",
+                            detail: "",
+                        },
+                        {
+                            role: "PM",
+                            action: "> If APU GEN is ON or two external power units are connected:",
+                            detail: "ACCU REINFLATE pb - PRESS",
+                        },
+                        {
+                            role: "PM",
+                            action: "> If APU GEN is OFF and only one external power unit is connected:",
+                            detail: "YELLOW ELEC PMP pb-sw - PRESS (the white OFF light comes on)\n\nACCU REINFLATE pb - PRESS\n\nYELLOW ELEC PMP pb-sw - PRESS (the white OFF light goes off)",
+                        },
+                        {
+                            role: "PM",
+                            action: "If the YELLOW pressure indication is not in the green band:",
+                            detail: "",
+                        },
+                        {
+                            role: "PM",
+                            action: "> If APU GEN is ON or two external power units are connected:",
+                            detail: "ACCU REINFLATE pb - PRESS",
+                        },
+                        {
+                            role: "PM",
+                            action: "> If APU GEN is OFF and only one external power unit is connected:",
+                            detail: "GREEN ELEC PMP pb-sw - PRESS (the white OFF light comes on)\n\nACCU REINFLATE pb - PRESS\n\nGREEN ELEC PMP pb-sw - PRESS (the white OFF light goes off)",
+                        },
+                        {
+                            role: "PM",
+                            action: "PARK BRK handle - ON",
+                            detail: "Set to ON the PARK BRK handle during the exterior inspection, in order to check the brake wear indicators.",
+                        },
+                        {
+                            role: "PM",
+                            action: "PARK BRK indication - CHECK DISPLAYED",
+                            detail: "When the parking brake is set to ON and the pressure is effective on brakes, the slats/flaps display shows the PARK BRK indication.",
+                        },
+                        {
+                            role: "PM",
+                            action: "EMER EQPT - CHECK",
+                            detail: "Check that:\n- Life vests are stowed\n- Crash axe or crow bar is stowed\n- Protective Breathing Equipment (PBE) is stowed and ready for use\n- Portable fire extinguisher is lockwired and the pressure gauge indicator is in the green area\n- Oxygen masks are stowed\n- Flashlights are stowed.",
+                        },
+                        {
+                            role: "PM",
+                            action: "GEAR PINS - CHECK ONBOARD/STOWED",
+                            detail: "Check that the five gear pins are on board and stowed.",
+                        },
+                        {
+                            role: "PM",
+                            action: "FAN COWL DOORS (FCD) KEYS - CHECK ONBOARD/STOWED",
+                            detail: "58501, 58502\nCheck that the two FCD keys are on board and stowed.\n\n!= 58501, 58502\nCheck that the four FCD keys are on board and stowed.",
+                        },
+                        {
+                            role: "PM",
+                            action: "EXTERIOR WALKAROUND - PERFORM",
+                            detail: "",
+                        },
+                    ],
+                },
+                {
+                    title: "Cockpit Preparation",
+                    items: [
+                        {
+                            role: "BOTH",
+                            action: "OVERHEAD PANEL",
+                            isHeader: true,
+                        },
+                        {
+                            role: "PF",
+                            action: "As a general rule, during the scan sequence: All white light (except MAINTENANCE panel) - OFF",
+                            detail: "During the scan of the overhead panel, check also that the only amber lights are the GEN FAULT lights.",
+                        },
+                        {
+                            role: "PF",
+                            action: "CAPT/CAPT & PURS sw - CAPT",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "RCDR GND CTL pb - ON",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "ELT - ARMED",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "CKPT EQPT POWER SUPPLY buttons (left side) - CHECK",
+                            detail: "Check that all power supply buttons are pushed.",
+                        },
+                        {
+                            role: "PF",
+                            action: "RESET buttons (left side) - CHECK",
+                            detail: "Check that all reset buttons are pushed.",
+                        },
+                        {
+                            role: "PF",
+                            action: "STROBE sw - AUTO",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "BEACON sw - OFF",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "NAV sw - AS RQRD",
+                            detail: "Set to NAV 1 the NAV sw, as required, to turn on the navigation lights (NAV LT 2 is used only when NAV LT 1 fails).",
+                        },
+                        {
+                            role: "PF",
+                            action: "REMAINING EXTERIOR LIGHTS - AS RQRD",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "SIGNS panel - SET",
+                            detail: "- Set the SEAT BELTS sw to ON when refueling is complete. For more information, Refer to PRO-NOR-SUP-SUP-FUEL Fueling with Passengers Embarking, On Board, or Disembarking\n- Set the EMER EXIT LT sw to ARM\n- Set the other switches, as required.",
+                        },
+                        {
+                            role: "PF",
+                            action: "PROBE & WINDOW HEAT pb-sw - AUTO",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "XBLEED selector - AUTO",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "AIR FLOW selector - NORM",
+                            detail: "As long as the number of passenger is not entered in the FMS, airflow is automatically adjusted to the maximum number of passengers.\nAs soon as the number of passengers is entered, during FMS initialization, airflow is automatically adjusted to the actual number of passengers.",
+                        },
+                        {
+                            role: "PF",
+                            action: "COCKPIT selector - AS RQRD",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "CABIN selector - PURS SEL",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "MAINTENANCE panel - CHECK",
+                            detail: "Check the MAINTENANCE according to current maintenance operations on the aircraft: some lights may be kept ON during the cockpit preparation, for example:\n- ON light on GND CONNECTION pb-sw, or\n- ON light on REMOTE C/B CTL pb-sw.\n\nAt the latest, check that all lights on the MAINTENANCE panel are OFF before initiating the Cockpit Preparation checklist.",
+                        },
+                        {
+                            role: "PF",
+                            action: "CARGO AIR COND panel - AS RQRD",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "CVR TEST pb - PRESS",
+                            detail: "Press and release the CVR TEST pb. Check the absence of the DISPATCH PAGE UPDATE ECAM alert.",
+                        },
+                        {
+                            role: "PF",
+                            action: "CKPT EQPT POWER SUPPLY buttons (right side) - CHECK",
+                            detail: "Check that all power supply buttons are pushed.",
+                        },
+                        {
+                            role: "PF",
+                            action: "RESET buttons (right side) - CHECK",
+                            detail: "Check that all reset buttons are pushed.",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "CTR INSTRUMENT PANEL",
+                            isHeader: true,
+                        },
+                        {
+                            role: "PF",
+                            action: "AIR DATA selector - AUTO",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "FMS selector - NORM",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "ISIS - CHECK",
+                            detail: "- Adjust the brightness, as appropriate\n- Check:\n  - The airspeed\n  - The barometric setting\n  - The altitude indication\n  - The attitude indications\n  - The heading.",
+                        },
+                        {
+                            role: "PF",
+                            action: "ANTI SKID sw - ON",
+                            detail: "",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "PEDESTRAL",
+                            isHeader: true,
+                        },
+                        {
+                            role: "PF",
+                            action: "RMP 1 - CHECK ON/SET",
+                            detail: "STBY NAV - CHECK OFF | STBY RAD NAV key - CHECK OFF",
+                        },
+                        {
+                            role: "PF",
+                            action: "ACCU PRESS - CHECK",
+                            detail: "The GREEN and YELLOW ACCU pressure indications must be in the green band.",
+                        },
+                        {
+                            role: "PF",
+                            action: "If the GREEN pressure indication is not in the green band:",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "> If APU GEN is ON or two external power units are connected:",
+                            detail: "ACCU REINFLATE pb - PRESS",
+                        },
+                        {
+                            role: "PF",
+                            action: "> If APU GEN is OFF and only one external power unit is connected:",
+                            detail: "YELLOW ELEC PMP pb-sw - PRESS (the white OFF light comes on)\n\nACCU REINFLATE pb - PRESS\n\nYELLOW ELEC PMP pb-sw - PRESS (the white OFF light goes off)",
+                        },
+                        {
+                            role: "PF",
+                            action: "If the YELLOW pressure indication is not in the green band:",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "> If APU GEN is ON or two external power units are connected:",
+                            detail: "ACCU REINFLATE pb - PRESS",
+                        },
+                        {
+                            role: "PF",
+                            action: "> If APU GEN is OFF and only one external power unit is connected:",
+                            detail: "GREEN ELEC PMP pb-sw - PRESS (the white OFF light comes on)\n\nACCU REINFLATE pb - PRESS\n\nGREEN ELEC PMP pb-sw - PRESS (the white OFF light goes off)",
+                        },
+                        {
+                            role: "PF",
+                            action: "PARK BRK handle - ON",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "PARK BRK indication - CHECK DISPLAYED",
+                            detail: "When the parking brake is set to ON and the pressure is effective on brakes, the slats/flaps display shows the PARK BRK indication.",
+                        },
+                        {
+                            role: "PF",
+                            action: "If brakes are hot and chocks are in place: PARK BRK handle - OFF",
+                            detail: "Release of the parking brake prevents the critical structures to be exposed to high temperatures during an extended time. However, depending on the operational conditions (e.g. slippery tarmac), the parking brake may remain applied.",
+                        },
+                        {
+                            role: "PF",
+                            action: "L/G GRVTY EXTN sw - OFF",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "THRUST LEVERS - IDLE",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "THRUST REVERSER LEVERS - STOWED",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "ENG 1, 2 MASTER LEVERS - OFF",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "ENG START selector - NORM",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "CKPT DOOR sw - NORM",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "RMP 2 - CHECK ON/SET",
+                            detail: "STBY NAV - CHECK OFF | STBY RAD NAV key - CHECK OFF",
+                        },
+                        {
+                            role: "PF",
+                            action: "RMP 3 - CHECK ON/SET",
+                            detail: "",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "MFD ATC COM",
+                            isHeader: true,
+                        },
+                        {
+                            role: "PF",
+                            action: "On the ATC COM/MSG RECORD/ALL MSG page: MSG RECORD - CHECK NO STORED MSG",
+                            detail: "Check that NO STORED MSG appears on the MFD. If it is not the case, click on the ERASE ALL button in order to erase the record of all CPDLC messages of the previous flight. This avoids confusing CPDLC messages from the previous flight with the ones of the current flight.",
+                        },
+                        {
+                            role: "PF",
+                            action: "On the ATC COM/CONNECT page: If ADS-C services are expected: ADS-C - CHECK ARMED",
+                            detail: "",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "MFD SURV",
+                            isHeader: true,
+                        },
+                        {
+                            role: "PF",
+                            action: "On the SURV/CONTROLS page: XPDR - STBY",
+                            detail: "",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "FMS PREPARATION",
+                            isHeader: true,
+                        },
+                        {
+                            role: "PF",
+                            action: "FLIGHT PLAN INITIALIZATION - COMPLETE, AS RQRD",
+                            detail: "Complete the FMS ACTIVE/INIT page, as required (in particular, the flight crew should SWAP ACTIVE UPLINKED CPNY F-PLN or insert the flight plan manually in case of uplink not available) For more information, Refer to FCTM/PR-NP-SOP-60 FMS Preparation.\n\nNote: If FMS rejects F-PLN due to FMS buffer full, Refer to DSC-22-FMS-40 FMS Rejected F-PLN due to the FMS Buffer Full.",
+                        },
+                        {
+                            role: "PF",
+                            action: "ACTIVE F-PLN - CHECK/COMPLETE",
+                            detail: "Use the computerized flight plan as reference for routing and fuel predictions.\n- Check the EOSID on the ND PLAN mode, if applicable\n- Check the F-PLN and the ND PLAN mode vs. the computerized flight plan or the navigation charts (on the FMS ACTIVE/INIT page, the flight crew can access the route summary via the RTE SUMMARY button)\n- Check the distance to destination along the F-PLN. Compare it with the total distance computed by the computerized flight plan\n- Modify the active flight plan, as appropriate.\n\nNote: Two waypoints on the FMS using the same name but different lat/long (location) will be deleted by company flight plan uplink, then cause flight plan discontinuity. The flight crew should manually insert the waypoint by cross check OFP lat/long position data.",
+                        },
+                        {
+                            role: "PF",
+                            action: "SEC F-PLN(s) - AS APPROPRIATE",
+                            detail: "",
+                        },
+                    ],
+                },
+                {
+                    title: "Before Pushback or Start",
+                    items: [
+                        {
+                            role: "BOTH",
+                            action: "BEFORE PUSHBACK/START CLEARANCE",
+                            isHeader: true,
+                        },
+                    ],
+                },
+                {
+                    title: "Engine Start",
+                    items: [],
+                },
+                {
+                    title: "After Start (All Engines Taxi at Departure)",
+                    items: [],
+                },
+                {
+                    title: "All Engines Taxi at Departure",
+                    items: [],
+                },
+                {
+                    title: "Departure Change",
+                    items: [],
+                },
+                {
+                    title: "Before Takeoff",
+                    items: [],
+                },
+                {
+                    title: "Takeoff",
+                    items: [],
+                },
+                {
+                    title: "After Takeoff",
+                    items: [],
+                },
+                {
+                    title: "Climb",
+                    items: [],
+                },
+                {
+                    title: "Cruise",
+                    items: [],
+                },
+                {
+                    title: "Descent Preparation",
+                    items: [],
+                },
+                {
+                    title: "Descent",
+                    items: [],
+                },
+                {
+                    title: "Approach",
+                    items: [],
+                },
+                {
+                    title: "Manual Landing",
+                    items: [],
+                },
+                {
+                    title: "Automatic Landing",
+                    items: [],
+                },
+                {
+                    title: "Go Around",
+                    items: [],
+                },
+                {
+                    title: "After Landing",
+                    items: [],
+                },
+                {
+                    title: "Parking",
+                    items: [],
+                },
+                {
+                    title: "Cockpit Postflight Security Check",
+                    items: [],
+                },
+                {
+                    title: "Securing the Aircraft",
+                    items: [],
+                },
+            ];
+
+            const container = document.getElementById("checklist-container");
+
+            // Initialize with 'ALL'
+            let selectedRoles = new Set(["ALL"]);
+
+            function renderChecklist() {
+                container.innerHTML = "";
+
+                sopData.forEach((section) => {
+                    const sectionEl = document.createElement("div");
+                    sectionEl.className = "section";
+
+                    const header = document.createElement("div");
+                    header.className = "section-header";
+                    header.textContent = section.title;
+                    sectionEl.appendChild(header);
+
+                    let visibleItemsCount = 0;
+                    const itemsContainer = document.createElement("div");
+
+                    section.items.forEach((item) => {
+                        // Split combined roles (e.g. "CM1-CM2" becomes ["CM1", "CM2"])
+                        const itemRoles = item.role.split(/[-/]/);
+                        let isVisible = false;
+
+                        // Logic:
+                        // 1. If "ALL" is selected -> Show Everything
+                        // 2. If Item is "BOTH" or "ALL" -> Always Show
+                        // 3. If any of the user's selected roles match any of the item's roles -> Show
+
+                        if (selectedRoles.has("ALL")) {
+                            isVisible = true;
+                        } else if (
+                            item.role === "BOTH" ||
+                            item.role === "ALL"
+                        ) {
+                            isVisible = true;
+                        } else {
+                            // Check if there is an intersection between active roles and item roles
+                            // e.g., User has ['CM1', 'PF']. Item has ['CM1', 'CM2']. Match found!
+                            const match = itemRoles.some((r) =>
+                                selectedRoles.has(r),
+                            );
+                            if (match) isVisible = true;
+                        }
+
+                        if (isVisible) {
+                            visibleItemsCount++;
+                            const itemEl = document.createElement("div");
+                            itemEl.className = "item-group";
+
+                            let html = `<div class="item">`;
+
+                            if (item.isHeader) {
+                                html += `<div style="font-weight:bold; color:var(--accent-color); border-bottom:1px solid #ddd; padding-bottom:5px; margin-bottom:5px;">${item.action}</div>`;
+                            } else {
+                                html += `<span class="item-role-badge role-${item.role}">${item.role}</span>`;
+                                html += `<div class="action-title">${item.action}</div>`;
+                                if (item.detail) {
+                                    html += `<div class="action-detail">${item.detail}</div>`;
+                                }
+                            }
+                            html += `</div>`;
+
+                            itemEl.innerHTML = html;
+                            itemsContainer.appendChild(itemEl);
+                        }
+                    });
+
+                    if (visibleItemsCount === 0) {
+                        const emptyMsg = document.createElement("div");
+                        emptyMsg.className = "empty-section-message";
+                        emptyMsg.textContent =
+                            "No actions for selected roles in this phase.";
+                        emptyMsg.style.display = "block";
+                        sectionEl.appendChild(emptyMsg);
+                    } else {
+                        sectionEl.appendChild(itemsContainer);
+                    }
+
+                    if (visibleItemsCount > 0) {
+                        container.appendChild(sectionEl);
+                    }
+                });
+            }
+
+            function toggleRole(role) {
+                // Handle "ALL" or specific roles
+                if (role === "ALL") {
+                    selectedRoles.clear();
+                    selectedRoles.add("ALL");
+                } else {
+                    // If "ALL" was previously selected, clear it now that we are picking specific
+                    if (selectedRoles.has("ALL")) {
+                        selectedRoles.clear();
+                    }
+
+                    // Toggle the specific role
+                    if (selectedRoles.has(role)) {
+                        selectedRoles.delete(role);
+                    } else {
+                        selectedRoles.add(role);
+                    }
+
+                    // If nothing is left selected, default back to ALL
+                    if (selectedRoles.size === 0) {
+                        selectedRoles.add("ALL");
+                    }
+                }
+
+                // Update Button Styles
+                updateButtonStyles();
+
+                // Re-render checklist
+                renderChecklist();
+            }
+
+            function updateButtonStyles() {
+                document.querySelectorAll(".role-btn").forEach((btn) => {
+                    const btnRole = btn.getAttribute("data-role");
+                    if (selectedRoles.has(btnRole)) {
+                        btn.classList.add("active");
+                    } else {
+                        btn.classList.remove("active");
+                    }
+                });
+            }
+
+            // Initial Render
+            renderChecklist();
+        </script>
+    </body>
+</html>
