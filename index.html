@@ -122,9 +122,10 @@
                 padding: 2px 6px;
                 border-radius: 3px;
                 align-self: flex-start;
-                margin-bottom: 5px;
                 font-weight: bold;
                 color: white;
+                margin-bottom: 0;
+                flex-shrink: 0; /* Prevents badge from squishing */
             }
 
             /* Role Badge Colors */
@@ -150,7 +151,8 @@
             .action-title {
                 font-weight: 700;
                 font-size: 1rem;
-                margin-bottom: 0.3rem;
+                flex-grow: 1; /* Forces the title to fill the middle space */
+                margin: 0;
             }
 
             .action-detail {
@@ -203,11 +205,10 @@
                 white-space: pre-wrap;
             }
 
-            /* Layout for the row with the button */
             .action-header {
                 display: flex;
-                justify-content: space-between;
-                align-items: center;
+                align-items: center; /* Vertically centers everything */
+                gap: 10px; /* Space between badge, title, and button */
                 width: 100%;
             }
 
@@ -220,12 +221,13 @@
                 padding: 5px 10px;
                 color: #999;
                 transition: transform 0.3s ease;
+                flex-shrink: 0; /* Prevents button from squishing */
             }
 
             .toggle-btn:hover {
                 color: var(--accent-color);
                 background-color: rgba(0, 0, 0, 0.05);
-                border-radius: 50%;
+                border-radius: 4px;
             }
 
             /* Rotate arrow when expanded */
@@ -1078,7 +1080,7 @@
                         {
                             role: "PF",
                             action: "FLIGHT PLAN INITIALIZATION - COMPLETE, AS RQRD",
-                            detail: "Complete the FMS ACTIVE/INIT page, as required (in particular, the flight crew should SWAP ACTIVE UPLINKED CPNY F-PLN or insert the flight plan manually in case of uplink not available) For more information, Refer to FCTM/PR-NP-SOP-60 FMS Preparation.\n\nNote: If FMS rejects F-PLN due to FMS buffer full, Refer to DSC-22-FMS-40 FMS Rejected F-PLN due to the FMS Buffer Full.",
+                            detail: "Complete the FMS ACTIVE/INIT page, as required (in particular, the flight crew should SWAP ACTIVE UPLINKED CPNY F-PLN or insert the flight plan manually in case of uplink not available).\n\nNote: If FMS rejects F-PLN due to FMS buffer full, Refer to DSC-22-FMS-40 FMS Rejected F-PLN due to the FMS Buffer Full.",
                         },
                         {
                             role: "PF",
@@ -1327,8 +1329,63 @@
                         },
                         {
                             role: "BOTH",
-                            action: "LATERAL CONSOLES",
+                            action: "LATERAL CONSOLE & PF/PM INSTRUMENT PANELS",
                             isHeader: true,
+                        },
+                        {
+                            role: "BOTH",
+                            action: "//warning//",
+                            detail: "To prevent hearing damage to the ground crew connected to the intercom system, inform them that a loud noise may be heard in the headset when performing the oxygen mask test.",
+                        },
+                        {
+                            role: "PF-PM",
+                            action: "OXYGEN MASK - TEST",
+                            detail: "For a detailed test of the mask, Refer to DSC-35-20-40 How to Test the Mask.",
+                        },
+                        {
+                            role: "PF-PM",
+                            action: "On the DOOR/OXYGEN SD page: REGUL PR LO indication - CHECK NOT DISPLAYED",
+                            detail: "",
+                        },
+                        {
+                            role: "PF-PM",
+                            action: "PFD - CHECK",
+                            detail: "- Check for the correct display, when ATT and HDG are available\n- Check the airspeed, the FMA, the initial target altitude, the altitude, the vertical speed, the barometric settings, and the heading indications\n- Check that the slats/flaps and the pitch trim displays are available.",
+                        },
+                        {
+                            role: "PF-PM",
+                            action: "ND - CHECK",
+                            detail: "- Check for the correct display\n- Check the heading, the initial waypoint, and the VOR/ADF indications.",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "FUEL ON BOARD",
+                            isHeader: true,
+                        },
+                        {
+                            role: "PF-PM",
+                            action: "FOB - CHECK",
+                            detail: "- On the permanent data of the SD, check that the FOB corresponds to the block fuel of the computerized flight plan\n- On the FMS ACTIVE/FUEL & LOAD page, check extra fuel/time at destination\n- On ECAM FUEL page, check that the fuel is correctly balanced\n- Crosscheck that the sum of the FOB recorded at the end of the last flight and the fuel uplift (if any) is consistent with the current FOB. If an abnormal difference is found, a maintenance action is due.\n\n350-900\nFOB after refueling up to 15 t - Abnormal difference above 900 kg\n\n350-1000\nFOB after refueling up to 15 t - Abnormal difference above 1000 kg\n\nabove 15 t: check FCOM",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "DEPARTURE BRIEFING",
+                            isHeader: true,
+                        },
+                        {
+                            role: "BOTH",
+                            action: "DEPARTURE BRIEFING - PERFORM",
+                            detail: "",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "COCKPIT PREPARATION C/L",
+                            isHeader: true,
+                        },
+                        {
+                            role: "BOTH",
+                            action: "COCKPIT PREPARATION C/L - COMPLETE",
+                            detail: 'Checklist trigger: Departure briefing completed.\n\nGEAR PINS & COVERS - REMOVED\nThe PF confirms that the gear pins and all covers were checked removed during the walkaround.\nThe PF announces "REMOVED".\n\nFUEL QUANTITY - __ KG\nThe PF checks the FOB and fuel distribution on the FUEL SD page, and compares with the computerized flight plan.\nThe PF announces e.g. "Fifteen thousand three hundred thirty kilograms balanced".\n\nBARO REF - __ (BOTH)\nThe PF and PM check and read the QNH setting (or QFE, if installed).\nThe PF then PM announces e.g. "QNH One Zero One Three".',
                         },
                     ],
                 },
@@ -1339,6 +1396,56 @@
                             role: "BOTH",
                             action: "BEFORE PUSHBACK/START CLEARANCE",
                             isHeader: true,
+                        },
+                        {
+                            role: "PF-PM",
+                            action: "FINAL LOADSHEET - CHECK",
+                            detail: "Both flight crewmembers carefully check the final loadsheet, particularly for significant errors.\nMake sure that the loadsheet data is correct (e.g. correct flight number, aircraft, DOW/CG, configuration, FOB).",
+                        },
+                        {
+                            role: "PF-PM",
+                            action: "FOB - CHECK",
+                            detail: "On the permanent data of the SD, check that the FOB corresponds to the block fuel of the computerized flight plan and to the loadsheet.",
+                        },
+                        {
+                            role: "PF",
+                            action: "ZFW/ZFWCG in FMS - CHECK/REVISE",
+                            detail: "The PF compares the ZFWIZFWCG of the loadsheet with the ZFW/ZFWCG entered in the ACTIVE/FUEL & LOAD page, and revises them if necessary.\nNOTE: ZFW are rounded up to the nearest hundred.",
+                        },
+                        {
+                            role: "PF",
+                            action: "PAX NBR in FMS - CHECK/REVISE",
+                            detail: "",
+                        },
+                        {
+                            role: "PM",
+                            action: "ZFW/ZFWCG in FMS - CROSSCHECK",
+                            detail: "",
+                        },
+                        {
+                            role: "PF-PM",
+                            action: "LOADSHEET TOCG AND ECAM GWCG - CROSSCHECK",
+                            detail: "Check the loadsheet TOCG vs. the ECAM GWCG:\n- If the difference is less than 1 %, no further action is required. Rely on ECAM GWCG\n- If there is more than 1 % difference, check that the ZFW and the ZFWCG are correctly entered in the FMS, then rely on ECAM GWCG.",
+                        },
+                        {
+                            role: "PF-PM",
+                            action: "ECAM GWCG - CHECK WITHIN OPERATIONAL LIMITS",
+                            detail: "Check that the Gross Weight CG displayed on the permanent data of the SD is within the CG operational limits.",
+                        },
+                        {
+                            role: "PF",
+                            action: "THS FOR __ - CHECK/REVISE",
+                            detail: "Check and/or revise the THS setting FOR takeoff. Use the TOCG indicated on the loadsheet as the reference for insertion of the T.O CG in the ACTIVE/PERF page.",
+                        },
+                        {
+                            role: "PM",
+                            action: "THS FOR __ - CROSSCHECK",
+                            detail: "",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "TAKEOFF DATA",
+                            detail: "Flight crew must update the takeoff data, and they independently compute again the performance data. After this new double computation, the PF enters the revised takeoff data in the FMS ACTIVE/PERF page. For OIS FINAL TAKEOFF PERF DATA re-computation uses the sum of TOW+TAXI which indicates on the ACTIVE/FUEL&LOAD page.",
                         },
                     ],
                 },
@@ -1466,25 +1573,31 @@
                             if (item.isHeader) {
                                 html += `<div style="font-weight:bold; color:var(--accent-color); border-bottom:1px solid #ddd; padding-bottom:5px; margin-bottom:5px;">${item.action}</div>`;
                             } else {
+                                // html += `<span class="item-role-badge role-${item.role}">${item.role}</span>`;
+
+                                // // Action Row (Title + Toggle Button)
+                                // html += `<div class="action-row">`;
+                                // html += `<div class="action-title">${item.action}</div>`;
+                                // New In-Line Header Row
+                                html += `<div class="action-header">`;
+
+                                // 1. Badge
                                 html += `<span class="item-role-badge role-${item.role}">${item.role}</span>`;
 
-                                // Action Row (Title + Toggle Button)
-                                html += `<div class="action-row">`;
+                                // 2. Title (now directly next to badge)
                                 html += `<div class="action-title">${item.action}</div>`;
 
                                 // Only show toggle button if details exist
                                 if (item.detail && item.detail.trim() !== "") {
-                                    html += `<button class="detail-toggle-btn" onclick="toggleSingleDetail('${itemId}')" title="Show Details">
-                                                            ▼
-                                                         </button>`;
+                                    html += `<button class="toggle-btn" onclick="toggleSingleDetail('${itemId}')">▼</button>`;
                                 }
                                 html += `</div>`; // End action-row
 
                                 // Detail Section (Hidden by default via CSS)
                                 if (item.detail && item.detail.trim() !== "") {
                                     html += `<div class="action-detail-container">
-                                                            <div class="action-detail">${item.detail}</div>
-                                                         </div>`;
+                                                        <div class="action-detail">${item.detail}</div>
+                                                     </div>`;
                                 }
                             }
                             html += `</div>`; // End item
