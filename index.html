@@ -142,7 +142,8 @@
             }
             .role-BOTH,
             .role-ALL,
-            .role-CM1-CM2 {
+            .role-CM1-CM2,
+            .role-PF-PM {
                 background-color: #7f8c8d;
             }
 
@@ -177,6 +178,67 @@
                 font-style: italic;
                 text-align: center;
                 display: none;
+            }
+            /* Collapsible container styles */
+            .action-detail-container {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-out;
+                background-color: #f9f9f9;
+                border-radius: 4px;
+                margin-top: 5px;
+            }
+
+            /* Expanded state */
+            .item.expanded .action-detail-container {
+                max-height: 1000px; /* Large enough to fit content */
+                transition: max-height 0.5s ease-in;
+                border-left: 3px solid #ddd;
+            }
+
+            .action-detail {
+                padding: 10px;
+                font-size: 0.9rem;
+                color: #555;
+                white-space: pre-wrap;
+            }
+
+            /* Layout for the row with the button */
+            .action-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+            }
+
+            /* The arrow button */
+            .toggle-btn {
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-size: 0.8rem;
+                padding: 5px 10px;
+                color: #999;
+                transition: transform 0.3s ease;
+            }
+
+            .toggle-btn:hover {
+                color: var(--accent-color);
+                background-color: rgba(0, 0, 0, 0.05);
+                border-radius: 50%;
+            }
+
+            /* Rotate arrow when expanded */
+            .item.expanded .toggle-btn {
+                transform: rotate(180deg);
+                color: var(--accent-color);
+            }
+
+            /* Master button specific style */
+            .master-btn {
+                background-color: var(--accent-color) !important;
+                border-color: var(--accent-color) !important;
+                margin-left: 15px;
             }
         </style>
     </head>
@@ -223,6 +285,13 @@
                     data-role="PM"
                 >
                     PM
+                </button>
+                <button
+                    id="masterBtn"
+                    class="role-btn master-btn"
+                    onclick="toggleAllDetails()"
+                >
+                    EXPAND ALL DETAILS
                 </button>
             </div>
         </header>
@@ -638,11 +707,6 @@
                         },
                         {
                             role: "PM",
-                            action: "ECAM ENG OIL QTY - CHECK",
-                            detail: "",
-                        },
-                        {
-                            role: "PM",
                             action: "On the DOOR SD page:",
                             detail: "",
                         },
@@ -664,7 +728,7 @@
                         {
                             role: "PM",
                             action: "On the ENG SD page: ENG OIL QUANTITY - CHECK NORMAL",
-                            detail: "350-900\nIf the ENG oil quantity indication does not appear on the ENG SD page, press the ENG 1 and 2 FADEC GND PWR pb-sw on the overhead maintenance panel. After the check of the ENG oil quantity, press again the ENG 1 and 2 FADEC GND PWR pb-sw.\n\n350-1000\nIf the ENG oil quantity indication does not appear on the ENG SD page, press the ENG 1 and 2 FADEC GND PWR pb-sw on the overhead maintenance panel. After the check of the ENG oil quantity, press again the ENG 1 and 2 FADEC GND PWR pb-sw.\n\ncommon\nCheck that the oil quantity is above the minimum. Refer to Engines Oil Limitations.",
+                            detail: "350-900\nIf the ENG oil quantity indication does not appear on the ENG SD page, press the ENG 1 and 2 FADEC GND PWR pb-sw on the overhead maintenance panel. Wait for 10 s to prevent the display of the spurious ENG 1(2) SHORT TERM MINOR FAULT dispatch message. After the check of the ENG oil quantity, press again the ENG 1 and 2 FADEC GND PWR pb-sw.\n\n350-1000\nIf the ENG oil quantity indication does not appear on the ENG SD page, press the ENG 1 and 2 FADEC GND PWR pb-sw on the overhead maintenance panel. After the check of the ENG oil quantity, press again the ENG 1 and 2 FADEC GND PWR pb-sw.\n\ncommon\nCheck that the oil quantity is above the minimum. Refer to Engines Oil Limitations.",
                         },
                         {
                             role: "PM",
@@ -1018,13 +1082,183 @@
                         },
                         {
                             role: "PF",
+                            action: "CRZ TEMP - RE-ENTER / ADJUST AS RQRD",
+                            detail: "The entry of accurate CRZ TEMP (at top of climb) enables FMS to correctly compute an accurate REC MÁX FL for top of climb. Use the forecasted cruise temperature from the computerized F-PLN.",
+                        },
+                        {
+                            role: "PF",
+                            action: "TROPO - CHECK",
+                            detail: "Check and modity tropopause level to agree with forecasted value at top of climb from the computerized F-PLN.",
+                        },
+                        {
+                            role: "PF",
+                            action: "WINDS - ENTER AS APPROPRIATE",
+                            detail: "Choose between the trip wind or the forecasted wind for climb, cruise, or descent, as appropriate.\nUse the average wind or forecasted wind from the computerized F-PLN.",
+                        },
+                        {
+                            role: "PF",
+                            action: "IRS ALIGNMENT",
+                            detail: "If the GPS is available:\n> IRS 1, 2, and 3 - CHECK NAV or ALIGN\n> On the FMS POSITION/IRS page, check that the IRS are either aligned or in alignment.\n\nIf the GPS is not available, or is failed:\n> IRS 1, 2, and 3 - ALIGN ON OTHER REF\n> In the ALIGN ON OTHER REF menu, enter the gate coordinates of the departure airport.",
+                        },
+                        {
+                            role: "PF",
+                            action: "DEPARTURE - SELECT/CHECK",
+                            detail: "Select the runway, SID and TRANS, as appropriate, in the FMS DEPARTURE page.\nIf the company route already has the departure procedure, check this departure.",
+                        },
+                        {
+                            role: "PF",
+                            action: "NAVAIDS - CHECK",
+                            detail: "On the FMS POSITION/NAVAIDS page, check the VOR, ADF 5 and ILS tuned by the FMS.\nChange them, if required, and check that the ND and PFD (for the ILS) display the correct ident.",
+                        },
+                        {
+                            role: "PF",
+                            action: "NAVAIDS DESELECTION - AS RQRD",
+                            detail: "Check the list of deselected navaids on the FMS POSITION/NAVAIDS page. If the NOTAMs warn that some navaids are not reliable, deselect them.",
+                        },
+                        {
+                            role: "PF",
+                            action: "FUEL AND LOAD //caution//",
+                            detail: "Some of the characteristic speeds that are displayed on the PFD (green dot, F, S, VLS) are based on the ZFW and ZFWCG that the flight crew enters in the FMS.\nIn addition, when the first engine starts, the pitch trim is automatically set to the takeoff target, based on the entered ZFWCG and block fuel. It is therefore the Captain's responsibility to carefully check ZFW and ZFWCG.",
+                        },
+                        {
+                            role: "PF",
+                            action: "ZFW/ZFWCG - INSERT",
+                            detail: "Enter the ZFWCG value to 30% and expect the ZFW value from operational flight plan (OFP).",
+                        },
+                        {
+                            role: "PF",
+                            action: "BLOCK FUEL - INSERT",
+                            detail: "If refuel is not yet completed, the flight crew can enter the expected block fuel to enable FMS predictions.",
+                        },
+                        {
+                            role: "PF",
+                            action: "PAX NBR - KEEP BLANK/INSERT",
+                            detail: "Insert PAX NBR if available or keep blank until loadsheet received then revise accordingly.",
+                        },
+                        {
+                            role: "PF",
+                            action: "TAXI/RTE RSV/ALTN/FINAL - CHECK/INSERT AS APPRORPIATE",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "MIN FUEL AT DEST - CHECK/INSERT AS APPRORPIATE",
+                            detail: "Check that the minimum fuel at destination is in accordance with the required minimum fuel.",
+                        },
+                        {
+                            role: "PF",
+                            action: "RWY - CHECK",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "PRELIMINARY TAKEOFF PERF DATA - INSERT",
+                            detail: "Insert the preliminary takeoff performance data on the T.O panel of the ACTIVE/PERF page.",
+                        },
+                        {
+                            role: "PF",
+                            action: "T.O SHIFT - INSERT AS RQRD",
+                            detail: "If the aircraft takes off from an intersection, insert a T.O shift value in order to:\n- Increase awareness of the runway length reduction\n- Ensure accurate T.O surveillance monitoring before the engines are set to takeoff power.",
+                        },
+                        {
+                            role: "PF",
+                            action: "V1, VR and V2 - INSERT",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "TOGA/FLEX/DERATED - SELECT/INSERT",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "FLAPS - SELECT",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "THS FOR _ - INSERT T.O CG (in %)",
+                            detail: "Insert the THS setting FOR a takeoff CG of NN.N%. Use the TOCG indicated on the loadsheet as the reference for insertion of the T.O CG in the FMS.",
+                        },
+                        {
+                            role: "PF",
+                            action: "PACKS - INSERT",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "ANTI-ICE - INSERT",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "THR RED/ACCEL ALTITUDE - SET OR CHECK",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "NOISE PROCEDURE - AS APPROPRIATE",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "TRANS ALTITUDE - AS APPROPRIATE",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "EO ACCEL ALTITUDE - SET OR CHECK",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "THR - SELECT AS APPROPRIATE",
+                            detail: "Select AUTO-DERATE or CLB on the CLB panel of the FMS ACTIVE/PERF page, as appropriate.",
+                        },
+                        {
+                            role: "PF",
+                            action: "On the CLB and CRZ panels of the FMS ACTIVE/PERF page: PRESEL SPEEDS - AS RQRD",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
                             action: "ACTIVE F-PLN - CHECK/COMPLETE",
                             detail: "Use the computerized flight plan as reference for routing and fuel predictions.\n- Check the EOSID on the ND PLAN mode, if applicable\n- Check the F-PLN and the ND PLAN mode vs. the computerized flight plan or the navigation charts (on the FMS ACTIVE/INIT page, the flight crew can access the route summary via the RTE SUMMARY button)\n- Check the distance to destination along the F-PLN. Compare it with the total distance computed by the computerized flight plan\n- Modify the active flight plan, as appropriate.\n\nNote: Two waypoints on the FMS using the same name but different lat/long (location) will be deleted by company flight plan uplink, then cause flight plan discontinuity. The flight crew should manually insert the waypoint by cross check OFP lat/long position data.",
                         },
                         {
                             role: "PF",
+                            action: "SEC F-PLN //caution//",
+                            detail: "The SEC 1(2)(3) flight plan data of the previous flight may not be automatically erased after landing.",
+                        },
+                        {
+                            role: "PF",
+                            action: "SEC F-PLAN(s) DATA - CHECK",
+                            detail: "On the FMS SEC INDEX page, review the SEC 1(2)(3) F-PLN and delete remaining data from the previous flight it appropriate.\nThe associated SEC 1(2)(3) data from the previous flight can be erased via the DELETE button on the SEC 1(2) (3) panel of the SEC INDEX page.",
+                        },
+                        {
+                            role: "PF",
                             action: "SEC F-PLN(s) - AS APPROPRIATE",
-                            detail: "",
+                            detail: "Create the SEC 1, SEC 2, and SEC 3 F-PLN, as appropriate, using the FMS SEC INDEX page.\nThe flight crew can use SEC 1 and SEC 2 to copy the active F-PLN, and to anticipate a runway change, an immediate return, or a diversion immediately after takeoff.\nFor an anticipated takeoff runway change, the flight crew must compute the takeoff performance accordingly.\nThe flight crew can load an AT flight plan in the SEC 3 only.",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "FMS DATA CROSSCHECK",
+                            isHeader: true,
+                        },
+                        {
+                            role: "PM",
+                            action: "FMS PREPARATION - CROSSCHECK",
+                            detail: "After the PF prepared the FMS, the PM checks all the data entered in the FMS. This check includes a crosscheck of:\n- Waypoints of the expected departure route that include constraints\n- Waypoints of the flight plan vs. the computerized flight plan\n- Initial cruise altitude vs. the computerized flight plan\n- Total track miles vs. the computerized flight plan\n- Fuel remaining at destination vs. the computerized flight plan\n- Performance data displayed on the PM's EFB takeoff performance application with the T.O panel of the FMS ACTIVE/PERF page. This includes modifications of the THR RED/ACCEL/EO ACCEL settings, if applicable.\n- TRANS ALT in the T.O panel of the FMS ACTIVE/PERF page\n- Setup of the SEC flight plan.\n\nThe PM should have the same mental image of the intended departure procedure, trajectory, and constraints than the PF. The PM should check with the PF if anything is not clear.",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "GLARESHIELD - When both flight crewmembers are seated",
+                            isHeader: true,
+                        },
+                        {
+                            role: "PF-PM",
+                            action: "LOUDSPEAKER knob - SET",
+                            detail: "Set the LOUDSPEAKER knob to approximately 1 o'clock position.",
                         },
                     ],
                 },
@@ -1116,15 +1350,18 @@
                 },
             ];
 
+            // --- STATE MANAGEMENT ---
             const container = document.getElementById("checklist-container");
-
-            // Initialize with 'ALL'
+            const masterBtn = document.getElementById("masterToggleBtn");
             let selectedRoles = new Set(["ALL"]);
+            let isMasterExpanded = false; // Tracks global state
 
+            // --- RENDERING ---
             function renderChecklist() {
                 container.innerHTML = "";
+                let hasVisibleActions = false;
 
-                sopData.forEach((section) => {
+                sopData.forEach((section, sIndex) => {
                     const sectionEl = document.createElement("div");
                     sectionEl.className = "section";
 
@@ -1136,49 +1373,51 @@
                     let visibleItemsCount = 0;
                     const itemsContainer = document.createElement("div");
 
-                    section.items.forEach((item) => {
-                        // Split combined roles (e.g. "CM1-CM2" becomes ["CM1", "CM2"])
+                    section.items.forEach((item, iIndex) => {
                         const itemRoles = item.role.split(/[-/]/);
                         let isVisible = false;
 
-                        // Logic:
-                        // 1. If "ALL" is selected -> Show Everything
-                        // 2. If Item is "BOTH" or "ALL" -> Always Show
-                        // 3. If any of the user's selected roles match any of the item's roles -> Show
-
-                        if (selectedRoles.has("ALL")) {
+                        if (selectedRoles.has("ALL")) isVisible = true;
+                        else if (item.role === "BOTH" || item.role === "ALL")
                             isVisible = true;
-                        } else if (
-                            item.role === "BOTH" ||
-                            item.role === "ALL"
-                        ) {
+                        else if (itemRoles.some((r) => selectedRoles.has(r)))
                             isVisible = true;
-                        } else {
-                            // Check if there is an intersection between active roles and item roles
-                            // e.g., User has ['CM1', 'PF']. Item has ['CM1', 'CM2']. Match found!
-                            const match = itemRoles.some((r) =>
-                                selectedRoles.has(r),
-                            );
-                            if (match) isVisible = true;
-                        }
 
                         if (isVisible) {
                             visibleItemsCount++;
                             const itemEl = document.createElement("div");
                             itemEl.className = "item-group";
 
-                            let html = `<div class="item">`;
+                            // Unique ID for toggling
+                            const itemId = `item-${sIndex}-${iIndex}`;
+
+                            let html = `<div class="item" id="${itemId}">`;
 
                             if (item.isHeader) {
                                 html += `<div style="font-weight:bold; color:var(--accent-color); border-bottom:1px solid #ddd; padding-bottom:5px; margin-bottom:5px;">${item.action}</div>`;
                             } else {
                                 html += `<span class="item-role-badge role-${item.role}">${item.role}</span>`;
+
+                                // Action Row (Title + Toggle Button)
+                                html += `<div class="action-row">`;
                                 html += `<div class="action-title">${item.action}</div>`;
-                                if (item.detail) {
-                                    html += `<div class="action-detail">${item.detail}</div>`;
+
+                                // Only show toggle button if details exist
+                                if (item.detail && item.detail.trim() !== "") {
+                                    html += `<button class="detail-toggle-btn" onclick="toggleSingleDetail('${itemId}')" title="Show Details">
+                                                            ▼
+                                                         </button>`;
+                                }
+                                html += `</div>`; // End action-row
+
+                                // Detail Section (Hidden by default via CSS)
+                                if (item.detail && item.detail.trim() !== "") {
+                                    html += `<div class="action-detail-container">
+                                                            <div class="action-detail">${item.detail}</div>
+                                                         </div>`;
                                 }
                             }
-                            html += `</div>`;
+                            html += `</div>`; // End item
 
                             itemEl.innerHTML = html;
                             itemsContainer.appendChild(itemEl);
@@ -1198,50 +1437,72 @@
 
                     if (visibleItemsCount > 0) {
                         container.appendChild(sectionEl);
+                        hasVisibleActions = true;
                     }
                 });
+
+                // Re-apply master state if it was expanded
+                if (isMasterExpanded) {
+                    expandAllDOM();
+                }
             }
 
+            // --- INTERACTIONS ---
+
             function toggleRole(role) {
-                // Handle "ALL" or specific roles
                 if (role === "ALL") {
                     selectedRoles.clear();
                     selectedRoles.add("ALL");
                 } else {
-                    // If "ALL" was previously selected, clear it now that we are picking specific
-                    if (selectedRoles.has("ALL")) {
-                        selectedRoles.clear();
-                    }
-
-                    // Toggle the specific role
-                    if (selectedRoles.has(role)) {
-                        selectedRoles.delete(role);
-                    } else {
-                        selectedRoles.add(role);
-                    }
-
-                    // If nothing is left selected, default back to ALL
-                    if (selectedRoles.size === 0) {
-                        selectedRoles.add("ALL");
-                    }
+                    if (selectedRoles.has("ALL")) selectedRoles.clear();
+                    if (selectedRoles.has(role)) selectedRoles.delete(role);
+                    else selectedRoles.add(role);
+                    if (selectedRoles.size === 0) selectedRoles.add("ALL");
                 }
-
-                // Update Button Styles
                 updateButtonStyles();
-
-                // Re-render checklist
                 renderChecklist();
             }
 
             function updateButtonStyles() {
                 document.querySelectorAll(".role-btn").forEach((btn) => {
+                    // Skip the master toggle button from role logic
+                    if (btn.id === "masterToggleBtn") return;
+
                     const btnRole = btn.getAttribute("data-role");
-                    if (selectedRoles.has(btnRole)) {
-                        btn.classList.add("active");
-                    } else {
-                        btn.classList.remove("active");
-                    }
+                    if (selectedRoles.has(btnRole)) btn.classList.add("active");
+                    else btn.classList.remove("active");
                 });
+            }
+
+            // Toggle a single item
+            function toggleSingleDetail(itemId) {
+                const itemEl = document.getElementById(itemId);
+                if (itemEl) {
+                    itemEl.classList.toggle("expanded");
+                }
+            }
+
+            // Master Toggle Logic
+            function toggleAllDetails() {
+                isMasterExpanded = !isMasterExpanded;
+
+                if (isMasterExpanded) {
+                    expandAllDOM();
+                    masterBtn.textContent = "COLLAPSE ALL DETAILS";
+                } else {
+                    collapseAllDOM();
+                    masterBtn.textContent = "EXPAND ALL DETAILS";
+                }
+            }
+
+            function expandAllDOM() {
+                const items = document.querySelectorAll(".item");
+                items.forEach((el) => el.classList.add("expanded"));
+            }
+
+            function collapseAllDOM() {
+                const items = document.querySelectorAll(".item");
+                items.forEach((el) => el.classList.remove("expanded"));
             }
 
             // Initial Render
