@@ -263,14 +263,14 @@
                     onclick="toggleRole('CM1')"
                     data-role="CM1"
                 >
-                    CM1 (LHS)
+                    CM1
                 </button>
                 <button
                     class="role-btn"
                     onclick="toggleRole('CM2')"
                     data-role="CM2"
                 >
-                    CM2 (RHS)
+                    CM2
                 </button>
                 <button
                     class="role-btn"
@@ -1259,6 +1259,76 @@
                             role: "PF-PM",
                             action: "LOUDSPEAKER knob - SET",
                             detail: "Set the LOUDSPEAKER knob to approximately 1 o'clock position.",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "BAROMETRIC REFERENCE - SET/CROSSCHECK",
+                            detail: "Set the QNH on the EFIS CP and on the ISIS.\nCheck the barometric reference and altitude indications on the PFD and on ISIS.\nThe maximum difference is:\n- +/- 20 ft between both PFD\n- +/- 30 ft between ISIS and PFD.\n\nIf the difference of altitude indication between ISIS and PFD is greater than 30 ft, in rainy conditions:\n- Set the PROBE & WINDOW HEAT pb-sw to ON during two minutes, and\n- Check again the difference.\nBefore setting the PROBE & WINDOW HEAT pb-sw to ON, ensure that the protective covers are removed in order to prevent the covers from melting when the heater is used.",
+                        },
+                        {
+                            role: "PF-PM",
+                            action: "WX pb on EFIS CP - OFF",
+                            detail: "Before pressing the WX pb on any EFIS CP, the flight crew should be sure that:\n- No maintenance personnel is facing the aircraft within a distance less that 5 m (16 ft) within an arc of 135 ° on either side of the aircraft centerline\n- The aircraft is not directed towards any large metallic obstacle, such as a hangar, within 5 m (16 ft) in an arc of 90 ° on either side of the aircraft centerline.\nThe weather radar starts to emit as soon as one engine is started and the flight crew presses the WX pb on the EFIS CP",
+                        },
+                        {
+                            role: "PF-PM",
+                            action: "TRAF pb - TRAF or ID (with ADS-B Traffic option)",
+                            detail: "",
+                        },
+                        {
+                            role: "PF-PM",
+                            action: "OTHER EFIS OPTIONS - AS RQRD",
+                            detail: "Select other EFIS options (e.g. constraints, waypoints, navaids, etc.) as required.",
+                        },
+                        {
+                            role: "PF",
+                            action: "NORTH REF - MAG",
+                            detail: "Check that TRUE does not appear neither on the HDG/TRK window of the AFS CP, nor on the PFD/ND/ISIS.",
+                        },
+                        {
+                            role: "PF",
+                            action: "METER pb - AS RQRD",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "FD - ON",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "SPD/MACH window - DASHED",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "HDG/TRK window - DASHED",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "HDG-VS / TRK-FPA pb - HDG-VS",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "ALT window - INITIAL EXPECTED CLEARNCE ALTITUDE",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "V/S / FPA window - DASHED",
+                            detail: "Note: Do not engage the autothrust on ground, as it may generate the AUTO FLT A/THR OFF warning at engine start.",
+                        },
+                        {
+                            role: "PM",
+                            action: "AFS CP - CROSSCHECK",
+                            detail: "",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "LATERAL CONSOLES",
+                            isHeader: true,
                         },
                     ],
                 },
