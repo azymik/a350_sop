@@ -1626,11 +1626,93 @@
                 },
                 {
                     title: "After Start (All Engines Taxi at Departure)",
-                    items: [],
+                    items: [
+                        {
+                            role: "PF",
+                            action: "ENG START selector - NORM",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "ELM pb-sw - ON",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "APU BLEED pb-sw - OFF",
+                            detail: "",
+                        },
+                        {
+                            role: "PM",
+                            action: "GND SPLRS - ARM",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "ENG 1 and 2 ANTI ICE pb-sw - AS RQRD",
+                            detail: "",
+                        },
+                        {
+                            role: "PM",
+                            action: "RUDDER TRIM - CHECK NEUTRAL",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "WING ANTI ICE pb-sw - AS RQRD",
+                            detail: "",
+                        },
+                        {
+                            role: "PM",
+                            action: "FLAPS - SET",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "If the APU is not required: APU MASTER SW pb-sw - OFF",
+                            detail: "",
+                        },
+                        {
+                            role: "PM",
+                            action: "PITCH TRIM - CHECK",
+                            detail: "",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "ECAM STATUS - CHECK",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "N/W STEER DISC MEMO - CHECK NOT DISPLAYED",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "THRUST SETTING - CROSSCHECK",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "CLEAR TO DISCONNECT - ANNOUNCE",
+                            detail: "",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "AFTER START C/L - COMPLETE",
+                            detail: '//TBA//Checklist trigger: Departure briefing completed.\n\nGEAR PINS & COVERS - REMOVED\nThe PF confirms that the gear pins and all covers were checked removed during the walkaround.\nThe PF announces "REMOVED".\n\nFUEL QUANTITY - __ KG\nThe PF checks the FOB and fuel distribution on the FUEL SD page, and compares with the computerized flight plan.\nThe PF announces e.g. "Fifteen thousand three hundred thirty kilograms balanced".\n\nBARO REF - __ (BOTH)\nThe PF and PM check and read the QNH setting (or QFE, if installed).\nThe PF then PM announces e.g. "QNH One Zero One Three".',
+                        },
+                    ],
                 },
                 {
                     title: "All Engines Taxi at Departure",
-                    items: [],
+                    items: [
+                        {
+                            role: "PM",
+                            action: "TAXI CLEARANCE - OBTAIN",
+                            detail: "",
+                        },
+                    ],
                 },
                 {
                     title: "Departure Change",
