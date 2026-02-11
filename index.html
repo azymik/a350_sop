@@ -1447,11 +1447,182 @@
                             action: "TAKEOFF DATA",
                             detail: "Flight crew must update the takeoff data, and they independently compute again the performance data. After this new double computation, the PF enters the revised takeoff data in the FMS ACTIVE/PERF page. For OIS FINAL TAKEOFF PERF DATA re-computation uses the sum of TOW+TAXI which indicates on the ACTIVE/FUEL&LOAD page.",
                         },
+                        {
+                            role: "BOTH",
+                            action: "If takeoff conditions changed:",
+                            detail: "",
+                        },
+                        {
+                            role: "PF-PM",
+                            action: "> FINAL T.O PERF DATA - RECOMPUTE",
+                            detail: "The PF and the PM independently compute again the takeoff performance data.",
+                        },
+                        {
+                            role: "PF",
+                            action: "> FMS T.O DATA - REVISE",
+                            detail: "The PF revises the takeoff data in the FMS. If the flight crew uses the optimum configuration option for the computation, they should pay specific attention to changes to the configuration of the slats/flaps at takeoff.",
+                        },
+                        {
+                            role: "PM",
+                            action: "FINAL T.O PERF DATA - CROSSCHECK",
+                            detail: "The PM compares the T.O panel of the FMS ACTIVE/PERF page with the EFB takeoff performance application. The Flysmart has the function of XCHECK WITH AVNCS which enables the flight crew to automatically check takeoff performance data.",
+                        },
+                        {
+                            role: "PF-PM",
+                            action: "SEATING POSITION - ADJUST",
+                            detail: "TBA",
+                        },
+                        {
+                            role: "PF-PM",
+                            action: "HUD - DEPLOY/ADJUST",
+                            detail: "",
+                        },
+                        {
+                            role: "PM",
+                            action: "AIR CONDITIONING UNITS - CHECK DISCONNECTED",
+                            detail: "",
+                        },
+                        {
+                            role: "PM",
+                            action: "EXT pb - CHECK AVAIL",
+                            detail: "",
+                        },
+                        {
+                            role: "PM",
+                            action: "EXT PWR DISCONNECTION - REQUEST",
+                            detail: "",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "AT PUSHBACK/START CLEARANCE",
+                            isHeader: true,
+                        },
+                        {
+                            role: "PM",
+                            action: "PUSHBACK/START CLEARANCE - OBTAIN",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "BEACON sw - ON",
+                            detail: "",
+                        },
+                        {
+                            role: "PF-PM",
+                            action: "TAXI VIDEO - AS RQRD",
+                            detail: "",
+                        },
+                        {
+                            role: "PF-PM",
+                            action: "DOORS & SLIDES - CHECK CLOSED/ARMED",
+                            detail: "",
+                        },
+                        {
+                            role: "PF-PM",
+                            action: "SURV DEFAULT SETTINGS - SELECT",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "THRUST LEVERS - IDLE",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "ACCU PRESS - CHECK",
+                            detail: "",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "If pushback is not required:",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "> PARK BRK handle - ON",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "> PARK BRK indication - CHECK DISPLAYED",
+                            detail: "",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "> BEFORE START C/L - COMPLETE",
+                            detail: '//TBA//Checklist trigger: Departure briefing completed.\n\nGEAR PINS & COVERS - REMOVED\nThe PF confirms that the gear pins and all covers were checked removed during the walkaround.\nThe PF announces "REMOVED".\n\nFUEL QUANTITY - __ KG\nThe PF checks the FOB and fuel distribution on the FUEL SD page, and compares with the computerized flight plan.\nThe PF announces e.g. "Fifteen thousand three hundred thirty kilograms balanced".\n\nBARO REF - __ (BOTH)\nThe PF and PM check and read the QNH setting (or QFE, if installed).\nThe PF then PM announces e.g. "QNH One Zero One Three".',
+                        },
+                        {
+                            role: "BOTH",
+                            action: "If pushback is required:",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "> N/W STEER DISC MEMO - CHECK DISPLAYED",
+                            detail: "",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "> BEFORE START C/L - COMPLETE",
+                            detail: '//TBA//Checklist trigger: Departure briefing completed.\n\nGEAR PINS & COVERS - REMOVED\nThe PF confirms that the gear pins and all covers were checked removed during the walkaround.\nThe PF announces "REMOVED".\n\nFUEL QUANTITY - __ KG\nThe PF checks the FOB and fuel distribution on the FUEL SD page, and compares with the computerized flight plan.\nThe PF announces e.g. "Fifteen thousand three hundred thirty kilograms balanced".\n\nBARO REF - __ (BOTH)\nThe PF and PM check and read the QNH setting (or QFE, if installed).\nThe PF then PM announces e.g. "QNH One Zero One Three".',
+                        },
+                        {
+                            role: "PF",
+                            action: "> PARK BRK handle - OFF",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "> When pushback is completed:",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: ">> PARK BRK handle - ON",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: ">> PARK BRK indication - CHECK DISPLAYED",
+                            detail: "",
+                        },
                     ],
                 },
                 {
                     title: "Engine Start",
-                    items: [],
+                    items: [
+                        {
+                            role: "PF",
+                            action: "THRUST LEVERS - IDLE",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "ENG START selector - IGN START",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "ENGINE 1 START - ANNOUNCE",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "ENG 1 MASTER lever - ON",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "ENG IDLE PARAMETERS - CHECK",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "In the case of all engines taxi at departure: REPEAT THE START SEQUENCE FOR ENG 2",
+                            detail: "",
+                        },
+                    ],
                 },
                 {
                     title: "After Start (All Engines Taxi at Departure)",
