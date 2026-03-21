@@ -296,9 +296,18 @@
                     EXPAND ALL DETAILS
                 </button>
             </div>
-            <div style="text-align: center; margin-top: 10px;">
-                <select id="quickNav" onchange="jumpToSection(this.value)" style="padding: 6px; border-radius: 4px; font-weight: bold; cursor: pointer;">
-                <option value="">Jump to a section...</option>
+            <div style="text-align: center; margin-top: 10px">
+                <select
+                    id="quickNav"
+                    onchange="jumpToSection(this.value)"
+                    style="
+                        padding: 6px;
+                        border-radius: 4px;
+                        font-weight: bold;
+                        cursor: pointer;
+                    "
+                >
+                    <option value="">Jump to a section...</option>
                 </select>
             </div>
         </header>
@@ -435,12 +444,7 @@
                         },
                         {
                             role: "CM2",
-                            action: "When the AVAIL light is on:",
-                            detail: "",
-                        },
-                        {
-                            role: "CM2",
-                            action: "> EXT 1(2) pb - AUTO",
+                            action: "When the AVAIL light is on: EXT 1(2) pb - AUTO",
                             detail: "In order to avoid electrical reconfigurations:\n- When only one electrical power is available, connect EXT PWR 2\n- When two electrical powers are available, connect EXT PWR 2 before EXT PWR 1.\nTo avoid the display of spurious dispatch messages, the GND SVCE sw 1 on the door 1L must be set to OFF before setting the EXT 1(2) pb to the AUTO position.",
                         },
                         { role: "BOTH", action: "ELM", isHeader: true },
@@ -659,12 +663,7 @@
                         },
                         {
                             role: "CM2",
-                            action: "> If EXT PWR 1 was used before APU start:",
-                            detail: "",
-                        },
-                        {
-                            role: "CM2",
-                            action: ">> EXT 1 pb - PRESS",
+                            action: "> If EXT PWR 1 was used before APU start: EXT 1 pb - PRESS",
                             detail: "Note: the AVAIL light comes on.\nThe flight crew may keep EXT PWR 2 to reduce the APU load, particularly in hot weather conditions.",
                         },
                         {
@@ -684,12 +683,7 @@
                         },
                         {
                             role: "CM1-CM2",
-                            action: "If dispatch under MEL or CDL and in accordance with the logbook:",
-                            detail: "",
-                        },
-                        {
-                            role: "CM1-CM2",
-                            action: "> MEL/CDL ITEMS - CHECK",
+                            action: "If dispatch under MEL or CDL and in accordance with the logbook: MEL/CDL ITEMS - CHECK",
                             detail: "Check that the EFB takes into account the MEL and CDL items.",
                         },
                         {
@@ -1474,18 +1468,23 @@
                         },
                         {
                             role: "PF-PM",
-                            action: "SEATING POSITION - ADJUST",
-                            detail: "TBA",
+                            action: "SEATS, SEAT BELTS, HARNESSES, RUDDER PEDALS, ARMRESTS - ADJUST",
+                            detail: "The seat is correctly adjusted when the pilot's eye are in line with the red ball and the white light.\nFor more information, Refer to FCTM/PR-NP-SOP-70 Seating Position and adjustment of Rudder Pedals.",
                         },
                         {
                             role: "PF-PM",
                             action: "HUD - DEPLOY/ADJUST",
-                            detail: "",
+                            detail: "Not Installed",
                         },
                         {
                             role: "PM",
                             action: "AIR CONDITIONING UNITS - CHECK DISCONNECTED",
                             detail: "",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "//warning//",
+                            detail: "Disconnection of the external power with the EXT pb set to AUTO may cause injury to the ground engineer. Request disconnection of the external power only with the EXT pb set to AVAIL",
                         },
                         {
                             role: "PM",
@@ -1505,37 +1504,72 @@
                         {
                             role: "PM",
                             action: "PUSHBACK/START CLEARANCE - OBTAIN",
-                            detail: "",
+                            detail: "Obtain ATC pushback/start clearance and ground crew clearance.",
                         },
                         {
                             role: "PF",
                             action: "BEACON sw - ON",
-                            detail: "",
+                            detail: "When cleared for start or pushback, set the BEACON sw to ON.",
                         },
                         {
                             role: "PF-PM",
                             action: "TAXI VIDEO - AS RQRD",
-                            detail: "",
+                            detail: "As required, set the TAXI video on the PFD or on the SD to see the aircraft vicinity.",
                         },
                         {
                             role: "PF-PM",
-                            action: "DOORS & SLIDES - CHECK CLOSED/ARMED",
-                            detail: "",
+                            action: "DOORS - CHECK CLOSED",
+                            detail: "- On the DOOR SD page, check that all doors are closed\n- When required by local authorities, check that the cockpit door is closed and locked (i.e. OPEN does not appear on the CKPT DOOR light on the pedestral).",
+                        },
+                        {
+                            role: "PF-PM",
+                            action: "SLIDES - CHECK ARMED",
+                            detail: "On the DOOR SD page, check that all slides are armed.",
                         },
                         {
                             role: "PF-PM",
                             action: "SURV DEFAULT SETTINGS - SELECT",
-                            detail: "",
+                            detail: "For more information, Refer to SURV/CONTROLS page.",
                         },
                         {
                             role: "PF",
                             action: "THRUST LEVERS - IDLE",
-                            detail: "",
+                            detail: "//caution// The engines start regardless of the thrust lever position. If the thrust levers are not set to IDLE then thrust rapidly increases to the corresponding thrust lever position, causing a hazardous situation.",
                         },
                         {
                             role: "PF",
                             action: "ACCU PRESS - CHECK",
                             detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "If the GREEN pressure indication is not in the green band:",
+                            detail: "",
+                        },
+                        {
+                            role: "PM",
+                            action: "> If APU GEN is ON or two external power units are connected:",
+                            detail: "ACCU REINFLATE pb - PRESS",
+                        },
+                        {
+                            role: "PM",
+                            action: "> If APU GEN is OFF and only one external power unit is connected:",
+                            detail: "YELLOW ELEC PMP pb-sw - PRESS (the white OFF light comes on)\n\nACCU REINFLATE pb - PRESS\n\nYELLOW ELEC PMP pb-sw - PRESS (the white OFF light goes off)",
+                        },
+                        {
+                            role: "PF",
+                            action: "If the YELLOW pressure indication is not in the green band:",
+                            detail: "",
+                        },
+                        {
+                            role: "PM",
+                            action: "> If APU GEN is ON or two external power units are connected:",
+                            detail: "ACCU REINFLATE pb - PRESS",
+                        },
+                        {
+                            role: "PM",
+                            action: "> If APU GEN is OFF and only one external power unit is connected:",
+                            detail: "GREEN ELEC PMP pb-sw - PRESS (the white OFF light comes on)\n\nACCU REINFLATE pb - PRESS\n\nGREEN ELEC PMP pb-sw - PRESS (the white OFF light goes off)",
                         },
                         {
                             role: "BOTH",
@@ -1550,12 +1584,12 @@
                         {
                             role: "PF",
                             action: "> PARK BRK indication - CHECK DISPLAYED",
-                            detail: "",
+                            detail: "When the parking brake is set to ON and the pressure is effective on brakes, the slats/flaps display shows the PARK BRK indication.",
                         },
                         {
                             role: "BOTH",
                             action: "> BEFORE START C/L - COMPLETE",
-                            detail: '//TBA//Checklist trigger: Departure briefing completed.\n\nGEAR PINS & COVERS - REMOVED\nThe PF confirms that the gear pins and all covers were checked removed during the walkaround.\nThe PF announces "REMOVED".\n\nFUEL QUANTITY - __ KG\nThe PF checks the FOB and fuel distribution on the FUEL SD page, and compares with the computerized flight plan.\nThe PF announces e.g. "Fifteen thousand three hundred thirty kilograms balanced".\n\nBARO REF - __ (BOTH)\nThe PF and PM check and read the QNH setting (or QFE, if installed).\nThe PF then PM announces e.g. "QNH One Zero One Three".',
+                            detail: 'Checklist trigger:\n- Pushback clearance or start clearance received, and\n- Before Start flow pattern completed.\n\nPARKING BRAKE - __\nThe PF checks the PARK BRK ON memo.\nThe PF announces e.g. "SET".\n\nT.O SPEEDS & THRUST - __ (BOTH)\nThe PF reads aloud V1, VR, V2 and thrust setting on the FMS PERF page while PM checks V1 and V2 on the PFD.\nThe PF announces e.g. "V1 One Two Five, VR One Two Five, V2 One Two Nine, Flex Fifty Two".\n\nThe PM reads aloud V1, VR, V2 and thrust setting on the FMS PERF page while PM checks V1 and V2 on the PFD.\nThe PM announces e.g. "V1 One Two Five, VR One Two Five, V2 One Two Nine, Flex Fifty Two".',
                         },
                         {
                             role: "BOTH",
@@ -1565,17 +1599,17 @@
                         {
                             role: "PF",
                             action: "> N/W STEER DISC MEMO - CHECK DISPLAYED",
-                            detail: "",
+                            detail: "In the case of a pushback (towbarless or conventional), the ground crew should set the tow pin to the towing position on the steering nose gear panel. The N/W STEER DISC memo on the ECAM indicates this position\n//caution// If the ECAM does not display the N/W STEER DISC memo, but the ground crew confirms that the tow pin is in the towing position, do not start the engines during pushbask in order to avoid possible damage to the nose landing gear upon yellow hydraulic pressurization.\nTo dispatch the aircraft in such case, Refer to MEL/32-50-02A Towing mode not available when the NWS DISCONNECT switch is in the towing position",
                         },
                         {
                             role: "BOTH",
                             action: "> BEFORE START C/L - COMPLETE",
-                            detail: '//TBA//Checklist trigger: Departure briefing completed.\n\nGEAR PINS & COVERS - REMOVED\nThe PF confirms that the gear pins and all covers were checked removed during the walkaround.\nThe PF announces "REMOVED".\n\nFUEL QUANTITY - __ KG\nThe PF checks the FOB and fuel distribution on the FUEL SD page, and compares with the computerized flight plan.\nThe PF announces e.g. "Fifteen thousand three hundred thirty kilograms balanced".\n\nBARO REF - __ (BOTH)\nThe PF and PM check and read the QNH setting (or QFE, if installed).\nThe PF then PM announces e.g. "QNH One Zero One Three".',
+                            detail: 'Checklist trigger:\n- Pushback clearance or start clearance received, and\n- Before Start flow pattern completed.\n\nPARKING BRAKE - __\nThe PF checks the PARK BRK ON memo.\nThe PF announces e.g. "SET".\n\nT.O SPEEDS & THRUST - __ (BOTH)\nThe PF reads aloud V1, VR, V2 and thrust setting on the FMS PERF page while PM checks V1 and V2 on the PFD.\nThe PF announces e.g. "V1 One Two Five, VR One Two Five, V2 One Two Nine, Flex Fifty Two".\n\nThe PM reads aloud V1, VR, V2 and thrust setting on the FMS PERF page while PM checks V1 and V2 on the PFD.\nThe PM announces e.g. "V1 One Two Five, VR One Two Five, V2 One Two Nine, Flex Fifty Two".',
                         },
                         {
                             role: "PF",
                             action: "> PARK BRK handle - OFF",
-                            detail: "",
+                            detail: "//caution// Do not use the brakes during pushback, unless required due to an emergency.",
                         },
                         {
                             role: "PF",
@@ -1590,7 +1624,7 @@
                         {
                             role: "PF",
                             action: ">> PARK BRK indication - CHECK DISPLAYED",
-                            detail: "",
+                            detail: "When the parking brake is set to ON and the pressure is effective on brakes, the slats/flaps display shows the PARK BRK indication.\nAsk the ground crew for towbar disconnection.",
                         },
                     ],
                 },
@@ -1598,79 +1632,94 @@
                     title: "Engine Start",
                     items: [
                         {
+                            role: "BOTH",
+                            action: "AUTOMATIC ENGINE START",
+                            isHeader: true,
+                        },
+                        {
                             role: "PF",
                             action: "THRUST LEVERS - IDLE",
-                            detail: "",
+                            detail: "//caution// The engines start regardless of the thrust lever position. If the thrust levers are not set to IDLE, then thrust rapidly increases to the corresponding thrust lever position, causing a hazardous situation.",
                         },
                         {
                             role: "PF",
                             action: "ENG START selector - IGN START",
-                            detail: "",
+                            detail: "The ENG SD page appears.\nNote: High tailwinds (higher than 15 kt) may have an adverse effect on start. It may be necessary to repostion the airplane into the wind.",
                         },
                         {
                             role: "PF",
                             action: "ENGINE 1 START - ANNOUNCE",
+                            detail: "Note: For any operational reason, engine 2 can be started first.",
+                        },
+                        {
+                            role: "PF",
+                            action: "For -900: WAIT - 10 s",
                             detail: "",
                         },
                         {
                             role: "PF",
-                            action: "ENG 1 MASTER lever - ON",
+                            action: "After all amber crosses and messages have disappeared from the ED and ENG SD page: ENG 1 MASTER lever - ON",
+                            detail: "Note:\n- Parameter callouts are not mandatory.\n- During engine start, the oil quantity indication on the ENG SD page decreases due to oil gulping effect. Triggering of the oil quantity advisory may occur during engine start and engine warm-up, and the indication may temporarily reach zero. The flight crew can continue normal engine operations, due to the fact that the oil quantity will increase during the warm up period.\n\nThe corresponding start valve is open.\nThe bleed pressure is green.\nThe engine LP valve is open.\n\nN3 increases.\nOil pressure increases.\n\nAt 25 % N3 and 8 % N2 with EGT < 150 °C:\n- FF increases\n- The indication of the active igniter (A or B) appears.\n\n40 s (maximum) after FF increases:\n- EGT increases\n- N1 increases.\n\nAt 48 % N3:\n- The corresponding start valve is closed\n- Ignition indication no longer appears.",
+                        },
+                        {
+                            role: "PF",
+                            action: "When the engine reaches idle (i.e. AVAIL appears on the ED): ENG IDLE PARAMETERS - CHECK",
+                            detail: "At ISA, sea level, with bleed off, check that:\n- THR is approximately 3.7 %\n- EGT is approximately 450 °C\n- N1 is approximately 19 %\n- N2 is approximately 58 %\n- N3 is approximately 62 %\n- FF is approximately 700 kg/h.",
+                        },
+                        {
+                            role: "PF",
+                            action: "In the case of all engines taxi at departure:",
                             detail: "",
                         },
                         {
                             role: "PF",
-                            action: "ENG IDLE PARAMETERS - CHECK",
+                            action: "> ENGINE 2 START - ANNOUNCE",
                             detail: "",
                         },
                         {
                             role: "PF",
-                            action: "In the case of all engines taxi at departure: REPEAT THE START SEQUENCE FOR ENG 2",
-                            detail: "",
+                            action: "> ENGINE 2 MASTER lever - ON",
+                            detail: "Apply the same procedure as indicated for engine 1.",
                         },
                     ],
                 },
                 {
-                    title: "After Start (All Engines Taxi at Departure)",
+                    title: "After Start",
                     items: [
+                        {
+                            role: "BOTH",
+                            action: "AFTER START (ALL ENGINES TAXI AT DEPARTURE)",
+                            isHeader: true,
+                        },
                         {
                             role: "PF",
                             action: "ENG START selector - NORM",
-                            detail: "",
+                            detail: "For more information about engine warm-up time, Refer to LIM-ENG Engine Warm-up Before Takeoff.",
+                        },
+                        {
+                            role: "PF",
+                            action: "ENG THRUST LEVER (LAST ENG STARTED): KEEP IDLE FOR 30 SECONDS",
+                            detail: "The stability of the ENG parameters ensures that the ESS A-ICE test is completed at engine start.\nThis prevents the spurious display of the ENG 1(2) STATOR A-ICE VLV CLOSED alert.",
                         },
                         {
                             role: "PF",
                             action: "ELM pb-sw - ON",
-                            detail: "",
+                            detail: "On the ELEC panel, ensure that the ELM pb-sw is set back to on.",
                         },
                         {
                             role: "PF",
                             action: "APU BLEED pb-sw - OFF",
-                            detail: "",
-                        },
-                        {
-                            role: "PM",
-                            action: "GND SPLRS - ARM",
-                            detail: "",
+                            detail: "This action enables to avoid ingestion of engine exhaust gases.",
                         },
                         {
                             role: "PF",
                             action: "ENG 1 and 2 ANTI ICE pb-sw - AS RQRD",
-                            detail: "",
-                        },
-                        {
-                            role: "PM",
-                            action: "RUDDER TRIM - CHECK NEUTRAL",
-                            detail: "",
+                            detail: "Set to ON the ENG ANTI ICE pb-sw when icing conditions exist or are anticipated.",
                         },
                         {
                             role: "PF",
-                            action: "WING ANTI ICE pb-sw - AS RQRD",
-                            detail: "",
-                        },
-                        {
-                            role: "PM",
-                            action: "FLAPS - SET",
-                            detail: "",
+                            action: "At least 15 s after APU bleed is set to off: WING ANTI ICE pb-sw - AS RQRD",
+                            detail: "Use of APU bleed air for wing anti-ice is not permitted.\nOn ground when wing anti-ice is switched on, the anti-ice valves open for about 20 s (test sequence), then close as long as the aircraft is on ground.",
                         },
                         {
                             role: "PF",
@@ -1679,65 +1728,225 @@
                         },
                         {
                             role: "PM",
-                            action: "PITCH TRIM - CHECK",
+                            action: "GND SPLRS - ARM",
                             detail: "",
+                        },
+                        {
+                            role: "PM",
+                            action: "RUDDER TRIM RESET pb - PRESS",
+                            detail: "Press the RESET pb on the RUDDER TRIM panel.",
+                        },
+                        {
+                            role: "PM",
+                            action: "RUDDER TRIM - CHECK NEUTRAL",
+                            detail: "On the slats/flaps display of the PFD, check that the rudder trim is at neutral.",
+                        },
+                        {
+                            role: "PM",
+                            action: "FLAPS lever - SET FOR TAKEOFF",
+                            detail: "",
+                        },
+                        {
+                            role: "PM",
+                            action: "FLAPS - CHECK POSITION",
+                            detail: "Check the slats and flaps position on the slats/flaps display of the PFD\n\nIf taxiing in icing conditions with rain, slush or snow:\nMaintain the flaps retracted until the aircraft reaches the holding point of the takeoff runway.\nThis action prevents contamination of the slats/flaps mechanism.",
+                        },
+                        {
+                            role: "PM",
+                            action: "PITCH TRIM - CHECK",
+                            detail: "Check that the pitch trim is set to the takeoff target on the pitch trim display of the PFD.",
                         },
                         {
                             role: "BOTH",
                             action: "ECAM STATUS - CHECK",
-                            detail: "",
+                            detail: "The PM checks and the PF crosschecks that there is no status reminder (STS) on the WD.\nIf STS appears on the WD, press the STS pb on the ECP to display the STATUS page.",
                         },
                         {
                             role: "PF",
                             action: "N/W STEER DISC MEMO - CHECK NOT DISPLAYED",
-                            detail: "",
+                            detail: "//caution//\nIf the ECAM still displays the N/W STEER DISC memo, but the ground crew confirms that the tow pin is removed, the NWS Disconnection Function is inoperative.\nTo dispatch the aircraft in such a case, Refer to MEL/32-50-02B NWS DISCONNECT panel deactivated",
                         },
                         {
                             role: "PF",
                             action: "THRUST SETTING - CROSSCHECK",
-                            detail: "",
+                            detail: "The PF crosschecks the thrust setting (e.g. FLEX temperature) displayed on the ED with the FMS PERF page.",
                         },
                         {
                             role: "PF",
                             action: "CLEAR TO DISCONNECT - ANNOUNCE",
-                            detail: "",
+                            detail: "The ground crew:\n- Removes the chocks\n- Disconnects the interphone\n- Makes the hand signal on the left or right side.",
                         },
                         {
                             role: "BOTH",
                             action: "AFTER START C/L - COMPLETE",
-                            detail: '//TBA//Checklist trigger: Departure briefing completed.\n\nGEAR PINS & COVERS - REMOVED\nThe PF confirms that the gear pins and all covers were checked removed during the walkaround.\nThe PF announces "REMOVED".\n\nFUEL QUANTITY - __ KG\nThe PF checks the FOB and fuel distribution on the FUEL SD page, and compares with the computerized flight plan.\nThe PF announces e.g. "Fifteen thousand three hundred thirty kilograms balanced".\n\nBARO REF - __ (BOTH)\nThe PF and PM check and read the QNH setting (or QFE, if installed).\nThe PF then PM announces e.g. "QNH One Zero One Three".',
+                            detail: 'Checklist trigger: On hand signal from the ground personnel.\n\nANTI ICE - __\nThe PF checks the WING ANTI ICE pb and ENG 1(2) ANTI ICE pb on the ANTI ICE overhead panel.\nThe PF announces "OFF" or "Engines ON" or "Engines ON Wings ON".',
                         },
                     ],
                 },
                 {
-                    title: "All Engines Taxi at Departure",
+                    title: "Taxi",
                     items: [
+                        {
+                            role: "BOTH",
+                            action: "ALL ENGINES TAXI AT DEPARTURE",
+                            isHeader: true,
+                        },
                         {
                             role: "PM",
                             action: "TAXI CLEARANCE - OBTAIN",
                             detail: "",
                         },
+                        {
+                            role: "PF-PM",
+                            action: "TAXI pb on EFIS CP - AS RQRD",
+                            detail: "For more information, Refer to FCTM/PR-NP-SOP-100 External Taxing Aid Camera System.",
+                        },
+                        {
+                            role: "PF-PM",
+                            action: "ND RANGE selector - ZOOM, AS APPROPRIATE",
+                            detail: "The ANF is not a guidance system. If the ANF display does not correspond to the outside view, the flight crew must disregard the ANF display.\nFor more information, Refer to FCTM/PR-NP-SOP-100 Airport Navigation.",
+                        },
+                        {
+                            role: "PF",
+                            action: "EXTERIOR LIGHTS - SET",
+                            detail: "During taxi, the PF may request the PM to set exterior lights.\n\nNOSE sw - TAXI\n\nWhen crossing a runway: STROBE sw - ON",
+                        },
+                        {
+                            role: "PF",
+                            action: "PARK BRK handle - OFF",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "BRAKES - CHECK",
+                            detail: "For more information, Refer to FCTM/PR-NP-SOP-100 Carbon Brake Wear\n//caution// If the aircraft was parked in wet conditions for a long time, the first brake application at low speed is less effective.",
+                        },
+                        {
+                            role: "PM",
+                            action: "BRAKES FAN pb - AS RQRD",
+                            detail: "If an arc appears above the brake temperature on the WHEEL SD page, set to ON the BRAKE FAN pb.s",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "F/CTL - CHECK",
+                            detail: "Check the flight controls at a convenient stage, before or during taxi. For more information, Refer to FCTM/PR-NP-SOP-100 Flight Controls.",
+                        },
+                        {
+                            role: "PM",
+                            action: "ATC CLEARANCE - CONFIRM",
+                            detail: "",
+                        },
+                        {
+                            role: "PF",
+                            action: "FMS ACTIVE/PERF page - SET",
+                            detail: "",
+                        },
+                        {
+                            role: "PM",
+                            action: "FMS ACTIVE/F-PLN page - SET",
+                            detail: "",
+                        },
+                        {
+                            role: "PM",
+                            action: "AFS CP - CHECK/SET",
+                            detail: "On the PFD, crosscheck and confirm the cleared altitude.\n\nIf the ATC requires a heading after takeoff, or in the case of a radar vector departure, preset the heading on the AFS CP. NAV disarms. For more information, Refer to DSC-22-FG-110 How to Define a HDG/TRK Preset before Takeoff.",
+                        },
+                        {
+                            role: "PM",
+                            action: "FD - CHECK ON",
+                            detail: "",
+                        },
+                        {
+                            role: "PF-PM",
+                            action: "PFD/ND - CHECK",
+                            detail: "Check that the PFD (e.g. airspeeds, initial target altitude, heading, slats/flaps configuration, FMA modes) and the ND indications (SID) are in accordance with the departure.",
+                        },
+                        {
+                            role: "PF-PM",
+                            action: "EFIS CP - AS RQRD",
+                            detail: "Consider the following settings:\n- WX pb set to ON, on the PF side\n- TERR pb set to ON, on the PM side.\n\nWhen the flight crew presses the WX pb on the EFIS CP, it takes up to 30 s to fill the buffer with radar data, and to have the complete WX display available on the ND and on the VD.",
+                        },
+                        {
+                            role: "PM",
+                            action: "A/BRK pb - ARM",
+                            detail: "BRK RTO appears on the FMA.",
+                        },
+                        {
+                            role: "PM",
+                            action: "SQUAWK - CONFIRM/SET",
+                            detail: "",
+                        },
+                        {
+                            role: "PM",
+                            action: "T.O CONFIG pb - TEST",
+                            detail: "Press the T.O CONFIG pb on the ECP, and check that the WD displays the T.O CONFIG NORMAL memo.",
+                        },
+                        {
+                            role: "PM",
+                            action: "T.O MEMO - CHECK NO BLUE",
+                            detail: "Check that the WD does not display any blue line in the T.O memo section.",
+                        },
+                        {
+                            role: "PF-PM",
+                            action: "CABIN REPORT - RECEIVE",
+                            detail: "Check CABIN READY on the WD, or obtain the cabin report from the purser.",
+                        },
+                        {
+                            role: "BOTH",
+                            action: "TAXI C/L - COMPLETE",
+                            detail: 'Checklist trigger: T.O CONFIG pb pressed and cabin report received.\n\nFLIGHT CONTROLS - CHECKED (BOTH)\nThe PF confirms that the flight controls check was performed.\nThe PF then PM announces "CHECKED".\n\nFLAPS SETTING - CONF __ (BOTH)\nThe PF and PM check and compare the flaps setting on the PFD and FMS PERF page.\nThe PF then PM announces the configuration displayed on the PFD e.g. "CONF 1+F".\n\nRADAR - ON\nThe PF checks that WX is displayed on the ND.\nThe PF announces "ON".',
+                        },
                     ],
                 },
                 {
                     title: "Departure Change",
-                    items: [],
+                    items: [
+                        {
+                            role: "BOTH",
+                            action: "DEPARTURE CHANGE",
+                            isHeader: true,
+                        },
+                    ],
                 },
                 {
                     title: "Before Takeoff",
-                    items: [],
+                    items: [
+                        {
+                            role: "BOTH",
+                            action: "BEFORE TAKEOFF",
+                            isHeader: true,
+                        },
+                    ],
                 },
                 {
                     title: "Takeoff",
-                    items: [],
+                    items: [
+                        {
+                            role: "BOTH",
+                            action: "TAKEOFF",
+                            isHeader: true,
+                        },
+                    ],
                 },
                 {
                     title: "After Takeoff",
-                    items: [],
+                    items: [
+                        {
+                            role: "BOTH",
+                            action: "AFTER TAKEOFF",
+                            isHeader: true,
+                        },
+                    ],
                 },
                 {
                     title: "Climb",
-                    items: [],
+                    items: [
+                        {
+                            role: "BOTH",
+                            action: "CLIMB",
+                            isHeader: true,
+                        },
+                    ],
                 },
                 {
                     title: "Cruise",
@@ -1951,8 +2160,9 @@
             function buildNavigation() {
                 const nav = document.getElementById("quickNav");
                 // Clear existing options except the first one (useful if you re-render)
-                nav.innerHTML = '<option value="">Jump to a section...</option>';
-    
+                nav.innerHTML =
+                    '<option value="">Jump to a section...</option>';
+
                 sopData.forEach((section, index) => {
                     const option = document.createElement("option");
                     option.value = "section-" + index;
@@ -1964,15 +2174,16 @@
             function jumpToSection(sectionId) {
                 if (!sectionId) return;
                 const el = document.getElementById(sectionId);
-    
+
                 if (el) {
                     // We offset by 140px so your sticky header doesn't cover the title
-                    const y = el.getBoundingClientRect().top + window.scrollY - 140;
-                    window.scrollTo({ top: y, behavior: 'smooth' });
+                    const y =
+                        el.getBoundingClientRect().top + window.scrollY - 140;
+                    window.scrollTo({ top: y, behavior: "smooth" });
                 }
-    
+
                 // Reset the dropdown text back to "Jump to a section..."
-                document.getElementById("quickNav").value = ""; 
+                document.getElementById("quickNav").value = "";
             }
 
             // Don't forget to call buildNavigation() to populate the dropdown on load!
