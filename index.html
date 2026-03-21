@@ -296,6 +296,11 @@
                     EXPAND ALL DETAILS
                 </button>
             </div>
+            <div style="text-align: center; margin-top: 10px;">
+                <select id="quickNav" onchange="jumpToSection(this.value)" style="padding: 6px; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                <option value="">Jump to a section...</option>
+                </select>
+            </div>
         </header>
 
         <main id="checklist-container"></main>
@@ -1794,6 +1799,7 @@
                 sopData.forEach((section, sIndex) => {
                     const sectionEl = document.createElement("div");
                     sectionEl.className = "section";
+                    sectionEl.id = "section-" + sIndex;
 
                     const header = document.createElement("div");
                     header.className = "section-header";
@@ -1940,6 +1946,37 @@
                 const items = document.querySelectorAll(".item");
                 items.forEach((el) => el.classList.remove("expanded"));
             }
+
+            // --- QUICK NAVIGATION LOGIC ---
+            function buildNavigation() {
+                const nav = document.getElementById("quickNav");
+                // Clear existing options except the first one (useful if you re-render)
+                nav.innerHTML = '<option value="">Jump to a section...</option>';
+    
+                sopData.forEach((section, index) => {
+                    const option = document.createElement("option");
+                    option.value = "section-" + index;
+                    option.textContent = section.title;
+                    nav.appendChild(option);
+                });
+            }
+
+            function jumpToSection(sectionId) {
+                if (!sectionId) return;
+                const el = document.getElementById(sectionId);
+    
+                if (el) {
+                    // We offset by 140px so your sticky header doesn't cover the title
+                    const y = el.getBoundingClientRect().top + window.scrollY - 140;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                }
+    
+                // Reset the dropdown text back to "Jump to a section..."
+                document.getElementById("quickNav").value = ""; 
+            }
+
+            // Don't forget to call buildNavigation() to populate the dropdown on load!
+            buildNavigation();
 
             // Initial Render
             renderChecklist();
